@@ -9,7 +9,7 @@ export type Props = {
 export const Palette: React.FC<Props> = (props) => {
   const { palette } = props
   const swatches = palette.colors.map(c => (
-    <Swatch background={ c.color } name={ c.name } />
+    <Swatch background={ c.color } name={ c.name } key={ c.color}/>
   ))
   return (
     <div className="Palette">

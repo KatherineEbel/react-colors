@@ -3,7 +3,6 @@
 }
 
 .Palette--colors {
-    display: flex;
-    flex-wrap: wrap;
     height: 90%;
+    position: relative;
 }
