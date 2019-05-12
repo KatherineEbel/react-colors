@@ -11,8 +11,17 @@ export const Swatch: React.FC<ISwatchProps> = props => {
     <div className="Swatch"
          style={{ background }}
     >
-      <span>{ name }</span>
-      <span>MORE</span>
+      <div className="Swatch--container">
+        <div className="Swatch--content">
+          <span>{ name }</span>
+        </div>
+        <button className="Swatch--copy"
+                type="button"
+        >
+          Copy
+        </button>
+        <span className="Swatch--seeMore">More</span>
+      </div>
     </div>
   )
 }

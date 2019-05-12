@@ -1,8 +1,56 @@
 .Swatch {
     cursor: pointer;
-    display: inline-block;
-    height: 20%;
     margin: 0 auto;
     position: relative;
     width: 20%;
 }
+
+.Swatch--content {
+    bottom: 0;
+    color: #000;
+    font-size: 0.7rem;
+    padding: .7rem;
+    position: absolute;
+    left: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.Swatch--copy {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    display: block;
+    font-size: 1rem;
+    height: 30px;
+    left: 50%;
+    line-height: 30px;
+    margin: -15px 0 0 -50px;
+    outline: none;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    top: 50%;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    width: 100px;
+}
+
+.Swatch:hover .Swatch--copy {
+    opacity: 1;
+}
+
+.Swatch--seeMore {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    bottom: 0;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 60px;
+}
+
