@@ -1,12 +1,20 @@
 import React from 'react';
 import './App.css';
+import { Palette } from './Palette'
+import seedPalettes from './seedColors'
 
 const App: React.FC = () => {
-  return (
+  const palette = seedPalettes.find(p => p.id === 'flat-ui-colors-aussie')
+  return palette ? (
     <div className="App">
       <h1>Colors App</h1>
+      <Palette palette={palette}/>
     </div>
-  );
+  ) : (
+    <div className="App--error">
+      <h1>No Palate found!</h1>
+    </div>
+  )
 }
 
 export default App;
