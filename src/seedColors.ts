@@ -3,7 +3,7 @@ export interface Swatch {
   color: string
 }
 
-export interface Palette {
+export interface IPalette {
   name: string
   id: string
   emoji: string
@@ -11,7 +11,7 @@ export interface Palette {
 }
 
 
-const palette: Palette[] = [
+const palette: IPalette[] = [
   {
     name: "Material UI Colors",
     id: "material-ui-colors",
