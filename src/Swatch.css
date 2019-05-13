@@ -2,13 +2,9 @@
     cursor: pointer;
     display: inline-block;
     height: 25%;
-    margin: 0 auto;
+    margin: 0 auto -4px auto;
     position: relative;
     width: 20%;
-}
-
-.Swatch--container {
-    height: 100%;
 }
 
 .Swatch--content {
