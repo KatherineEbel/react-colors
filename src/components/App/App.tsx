@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import seedPalettes from './seedColors'
-import { generatePalette } from './colorHelpers'
+import seedPalettes from '../../utils/seedColors'
+import { generatePalette } from '../../utils/colorHelpers'
 import { Redirect, Route, Switch } from 'react-router'
-import { Palette } from './Palette'
+import { Palette } from '../Palette/Palette'
 
 const App: React.FC = () => {
   const matchPalette = (id: string): React.ReactElement => {
