@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Swatch } from './Swatch'
-import { ChromaPalette, IColor } from './colorHelpers'
+import { Swatch } from '../Swatch/Swatch'
+import { ChromaPalette, IColor } from '../../utils/colorHelpers'
 import './Palette.css'
 import { useState } from 'react'
-import NavBar from './NavBar'
+import NavBar from '../../components/NavBar/NavBar'
 
 export type Props = {
   palette: ChromaPalette
