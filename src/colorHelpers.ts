@@ -1,7 +1,14 @@
 import chroma from 'chroma-js'
 import { IPalette, Swatch } from './seedColors'
 
-export type ColorSet = {[n:number]: {name: string, id: string, hex: string, rgb: string, rgba: string}[]}
+export interface IColor {
+  name: string
+  id: string
+  hex: string
+  rgb: string
+  rgba: string
+}
+export type ColorSet = {[n:number]: IColor[]}
 export interface ChromaPalette {
   colors: ColorSet
   emoji: string
@@ -12,26 +19,24 @@ export interface ChromaPalette {
 
 const levels = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
-export function generatePalette (starterPalette: IPalette) {
-
+export function generatePalette (starterPalette: IPalette): ChromaPalette {
   let colors: ColorSet = levels.reduce((result: {[n: number]: string[]}, level) => {
   result[level] = []
   return result
 },{})
-  return starterPalette.colors.map((c:Swatch): ChromaPalette => {
-      const scale = generateScale(c.hexValue, 10).reverse()
-      return scale.reduce((chromaPalette: ChromaPalette, color, idx) => {
-        colors[levels[idx]].push({
-          id: c.name.toLowerCase().replace(/ /g, "-"),
-          name: `${c.name} ${levels[idx]}`,
-          hex: scale[idx],
-          rgb: chroma(scale[idx]).css(),
-          rgba: chroma(scale[idx]).css().replace("rgb", "rgba").replace(")", ",1.0)")
-        })
-        chromaPalette.colors = colors
-        return chromaPalette
-      },{...starterPalette, colors: {}})
-  })
+  return starterPalette.colors.reduce((palette: ChromaPalette, swatch: Swatch, idx: number) => {
+    const scale = generateScale(swatch.hexValue, 10).reverse()
+    scale.forEach((color: string, i: number) => {
+      palette.colors[levels[i]].push({
+        id: swatch.name.toLocaleLowerCase().replace(/ /g, '-'),
+        name: `${swatch.name} ${levels[i]}`,
+        hex: scale[i],
+        rgb: chroma(scale[i]).css(),
+        rgba: chroma(scale[i]).css().replace('rgb', 'rgba').replace(')', ',1.0)')
+      })
+    })
+    return palette
+  }, {...starterPalette, colors })
 }
 
 function generateScale (hexValue:string, colorCount: number) {

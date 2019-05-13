@@ -2,6 +2,10 @@
     height: 100vh;
 }
 
+.Palette .rc-slider {
+    margin: 1.5rem;
+}
+
 .Palette--colors {
     height: 90%;
     position: relative;
