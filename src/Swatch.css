@@ -7,6 +7,10 @@
     width: 20%;
 }
 
+.Swatch--container {
+    height: 100%;
+}
+
 .Swatch--content {
     bottom: 0;
     color: #000;

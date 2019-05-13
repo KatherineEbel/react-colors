@@ -8,7 +8,6 @@ const App: React.FC = () => {
   const palette = seedPalettes.find(p => p.id === 'flat-ui-colors-aussie')
   return palette ? (
     <div className="App">
-      <h1>Colors App</h1>
       <Palette palette={generatePalette(seedPalettes[3])}/>
     </div>
   ) : (
