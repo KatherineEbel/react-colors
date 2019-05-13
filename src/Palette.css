@@ -2,35 +2,6 @@
     height: 100vh;
 }
 
-.Palette .slider {
-    display: inline-block;
-    margin: 0 2vw;
-    width: 20vw;
-}
-
-
-.slider .rc-slider-track {
-    background-color: transparent;
-}
-
-.slider .rc-slider-rail {
-    height: 8px;
-}
-
-
-
-.slider .rc-slider-handle,
-.slider .rc-slider-handle:active,
-.slider .rc-slider-handle:focus,
-.slider .rc-slider-handle:hover {
-    background-color: green;
-    border: 2px solid green;
-    box-shadow: none;
-    height: 16px;
-    margin-top: -4px;
-    width: 16px;
-    outline: none;
-}
 
 .Palette--colors {
     height: 90%;
