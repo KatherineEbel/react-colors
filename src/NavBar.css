@@ -27,6 +27,7 @@
 
 .NavBar .select {
     margin-left: auto;
+    margin-right: 2vw;
 }
 .NavBar .slider {
     display: inline-block;

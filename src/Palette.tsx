@@ -14,9 +14,7 @@ export const Palette: React.FC<Props> = (props) => {
   const { colors, name } = props.palette
   const changeFormat = (value: string) => {
     setFormat(value)
-    alert(value)
   }
-  console.log(format)
   const swatches = colors[level].map((c: IColor) => (
     <Swatch background={ c[format]} name={ c.name } key={ c.hex}/>)
   )
