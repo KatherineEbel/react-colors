@@ -28,17 +28,15 @@ export const Swatch: React.FC<ISwatchProps> = props => {
           <h1>copied!</h1>
           <p>{ background }</p>
         </div>
-        <div className="Swatch--container">
-          <div className="Swatch--content">
-            <span>{ name }</span>
-          </div>
-          <button className="Swatch--copy"
-                  type="button"
-          >
-            Copy
-          </button>
-          <span className="Swatch--seeMore">More</span>
+        <div className="Swatch--content">
+          <span>{ name }</span>
         </div>
+        <button className="Swatch--copy"
+                type="button"
+        >
+          Copy
+        </button>
+        <span className="Swatch--seeMore">More</span>
       </div>
     </CopyToClipboard>
   )
