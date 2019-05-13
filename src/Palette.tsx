@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Swatch } from './Swatch'
 import Slider from 'rc-slider'
-import './Palette.css'
 import { ChromaPalette, IColor } from './colorHelpers'
 import 'rc-slider/assets/index.css'
+import './Palette.css'
 import { useState } from 'react'
 
 export type Props = {
@@ -17,11 +17,14 @@ export const Palette: React.FC<Props> = (props) => {
   ))
   return (
     <div className="Palette">
-      <Slider defaultValue={level}
-              min={100} max={900}
-              step={100}
-              onAfterChange={(newLevel) => setLevel(newLevel)}
-      />
+      <div className="slider">
+        <Slider className=""
+                defaultValue={level}
+                min={100} max={900}
+                step={100}
+                onAfterChange={(newLevel) => setLevel(newLevel)}
+        />
+      </div>
       <h1>{ name }</h1>
       {/*TODO: NavBar*/}
       <div className="Palette--colors">
