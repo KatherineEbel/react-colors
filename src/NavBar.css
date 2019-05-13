@@ -1,11 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,500');
-
 .NavBar {
     align-items: center;
     display: flex;
     height: 6vh;
     justify-content: flex-start;
-
 }
 
 .NavBar .logo {
@@ -19,6 +16,7 @@
     padding: 0 0.8rem;
     
 }
+
 .NavBar .logo button {
     background: transparent;
     border: none;
@@ -27,6 +25,9 @@
     outline: none;
 }
 
+.NavBar .select {
+    margin-left: auto;
+}
 .NavBar .slider {
     display: inline-block;
     margin: 0 2vw;

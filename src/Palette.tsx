@@ -9,14 +9,20 @@ export type Props = {
   palette: ChromaPalette
 }
 export const Palette: React.FC<Props> = (props) => {
+  const [format, setFormat]: [string, React.Dispatch<React.SetStateAction<string>>] = useState('hex')
   const [level, setLevel] = useState(500)
   const { colors, name } = props.palette
+  const changeFormat = (value: string) => {
+    setFormat(value)
+    alert(value)
+  }
+  console.log(format)
   const swatches = colors[level].map((c: IColor) => (
-    <Swatch background={ c.hex } name={ c.name } key={ c.hex}/>
-  ))
+    <Swatch background={ c[format]} name={ c.name } key={ c.hex}/>)
+  )
   return (
     <div className="Palette">
-      <NavBar level={ level } setLevel={ setLevel }/>
+      <NavBar level={ level } changeFormat={ changeFormat } format={format} setLevel={ setLevel }/>
       <h1>{ name }</h1>
       {/*TODO: NavBar*/}
       <div className="Palette--colors">

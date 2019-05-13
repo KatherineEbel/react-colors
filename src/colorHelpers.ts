@@ -4,9 +4,7 @@ import { IPalette, Swatch } from './seedColors'
 export interface IColor {
   name: string
   id: string
-  hex: string
-  rgb: string
-  rgba: string
+  [value: string]: string
 }
 export type ColorSet = {[n:number]: IColor[]}
 export interface ChromaPalette {
@@ -24,7 +22,7 @@ export function generatePalette (starterPalette: IPalette): ChromaPalette {
   result[level] = []
   return result
 },{})
-  return starterPalette.colors.reduce((palette: ChromaPalette, swatch: Swatch, idx: number) => {
+  return starterPalette.colors.reduce((palette: ChromaPalette, swatch: Swatch) => {
     const scale = generateScale(swatch.hexValue, 10).reverse()
     scale.forEach((color: string, i: number) => {
       palette.colors[levels[i]].push({
