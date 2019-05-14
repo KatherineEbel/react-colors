@@ -21,7 +21,6 @@ export const Palette: React.FC<Props> = ({ palette }) => {
   return (
     <div className="Palette">
       <NavBar level={ level } changeFormat={ changeFormat } format={format} setLevel={ setLevel }/>
-      {/*TODO: NavBar*/}
       <div className="Palette--colors">
         { swatches }
       </div>

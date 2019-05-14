@@ -18,8 +18,8 @@ const App: React.FC = () => {
 
   return (
     <Switch>
-      <Route exact path="/" render={() => <PaletteList palettes={ seedPalettes }/>}/>
-      <Route exact path="/palette/:id" render={(routeProps) => matchPalette(routeProps.match.params.id)}/>
+      <Route exact path="/" render={({ history }) => <PaletteList palettes={ seedPalettes } history={ history }/>}/>
+      <Route exact path="/palettes/:id" render={(routeProps) => matchPalette(routeProps.match.params.id)}/>
     </Switch>
   )
 }

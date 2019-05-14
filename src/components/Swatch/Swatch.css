@@ -53,6 +53,7 @@
     position: absolute;
     right: 0;
     text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
     width: 60px;
 }
@@ -75,17 +76,18 @@
 
 .overlay--message {
     align-items: center;
-    bottom: 0;
     color: white;
     display: flex;
     flex-direction: column;
     font-size: 4rem;
+    height: 150px;
     justify-content: center;
     left: 0;
     opacity: 0;
+    overflow: visible;
     position: fixed;
     right: 0;
-    top: 0;
+    top: 40%;
     transform: scale(0.1);
 }
 
