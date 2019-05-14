@@ -17,12 +17,15 @@
     
 }
 
-.NavBar .logo button {
+.NavBar .logo a {
     background: transparent;
-    border: none;
     cursor: pointer;
     font-size: 1.3rem;
-    outline: none;
+    text-decoration: none;
+}
+
+.NavBar .logo a:visited {
+    color: #222222;
 }
 
 .NavBar .select {

@@ -4,6 +4,7 @@ import seedPalettes from '../../utils/seedColors'
 import { generatePalette } from '../../utils/colorHelpers'
 import { Redirect, Route, Switch } from 'react-router'
 import { Palette } from '../Palette/Palette'
+import PaletteList from '../PaletteList/PaletteList'
 
 const App: React.FC = () => {
   const matchPalette = (id: string): React.ReactElement => {
@@ -17,7 +18,7 @@ const App: React.FC = () => {
 
   return (
     <Switch>
-      <Route exact path="/" render={() => <h1>Palette list goes here</h1>}/>
+      <Route exact path="/" render={() => <PaletteList palettes={ seedPalettes }/>}/>
       <Route exact path="/palette/:id" render={(routeProps) => matchPalette(routeProps.match.params.id)}/>
     </Switch>
   )
