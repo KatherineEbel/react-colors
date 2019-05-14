@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { IPalette } from '../../utils/seedColors'
-import MiniPalette from '../MiniPalette/MiniPalette'
 import createStyles from '@material-ui/core/styles/createStyles'
+import { History } from 'history'
 import { WithStyles } from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
+import { IPalette } from '../../utils/seedColors'
+import MiniPalette from '../MiniPalette/MiniPalette'
 
 const styles = () =>
   createStyles({
@@ -37,14 +38,21 @@ const styles = () =>
   })
 
 interface IPaletteListProps extends WithStyles<typeof styles> {
+  history: History
   palettes: IPalette[]
 }
 
-const PaletteList: React.FC<IPaletteListProps> = ({ classes, palettes }) => {
+const PaletteList: React.FC<IPaletteListProps> = ({ classes, history, palettes }) => {
+  const pushPalette = (id: string) => {
+    history.push(`palettes/${id}`)
+  }
+
   const { root, container, miniPalettes, nav } = classes
   const links = palettes.map(p => (
-    <MiniPalette {...p}/>
+    <MiniPalette {...p} goToPalette={ pushPalette.bind(null, p.id)}/>
   ))
+
+
   return (
     <div className={ root }>
       <div className={ container }>

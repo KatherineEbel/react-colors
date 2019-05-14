@@ -49,23 +49,30 @@ const styles = () =>
   })
 
 interface Props extends WithStyles<typeof styles> {
-  name: string
-  id: string
-  emoji: string
   colors: Swatch[]
+  emoji: string
+  goToPalette: (id: string) => void
+  id: string
+  name: string
 }
 
 const MiniPalette: React.FC<Props> = (props) => {
-  {/*<Link to={`/palette/${p.id}`}>{p.name}</Link>*/}
-  const { classes, colors, name, emoji } = props
+  const { classes, colors, goToPalette, id, name, emoji } = props
   const swatches = colors.map(c => (
     <div style={{background: c.hexValue }}
          className={ classes.swatch }
          key={ c.name }
     />
   ))
+
+  const handleClick = () => {
+    goToPalette(id)
+  }
+
   return (
-    <div className={ classes.root }>
+    <div className={ classes.root }
+         onClick={ handleClick }
+    >
       <div className={ classes.colors }>
         { swatches }
       </div>
