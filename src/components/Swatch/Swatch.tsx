@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useState } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import './Swatch.css'
+import { Link } from 'react-router-dom'
 
 export interface ISwatchProps {
   background: string
@@ -36,7 +37,10 @@ export const Swatch: React.FC<ISwatchProps> = props => {
         >
           Copy
         </button>
-        <span className="Swatch--seeMore">More</span>
+        <Link className='Swatch--seeMore'
+              onClick={e => e.stopPropagation()}
+              to='/'
+        >More</Link>
       </div>
     </CopyToClipboard>
   )
