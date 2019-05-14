@@ -20,6 +20,7 @@ const App: React.FC = () => {
     <Switch>
       <Route exact path="/" render={({ history }) => <PaletteList palettes={ seedPalettes } history={ history }/>}/>
       <Route exact path="/palettes/:id" render={(routeProps) => matchPalette(routeProps.match.params.id)}/>
+      <Route path='/palettes/:paletteId/:colorId' render={(routeProps) => <h1>Color Shade Palette{routeProps.match.params.paletteId}</h1>}/>
     </Switch>
   )
 }
