@@ -11,6 +11,7 @@ const styles = () =>
       alignItems: 'flex-start',
       backgroundColor: 'blue',
       display: 'flex',
+      height: '100vh',
       justifyContent: 'center'
     },
     container: {

@@ -7,6 +7,17 @@ import { Swatch } from '../../utils/seedColors'
 // parameter of type import { Theme } from '@material-ui/core/styles/createMuiTheme'
 const styles = () =>
   createStyles({
+    colors: {
+      backgroundColor: '#dae1e4',
+      borderRadius: '5px',
+      height: '150px',
+      overflow: 'hidden',
+      width: '100%',
+    },
+    emoji: {
+      marginLeft: '0.5rem',
+      fontSize: '1.5rem'
+    },
     root: {
       backgroundColor: 'white',
       border: '1px solid black',
@@ -18,8 +29,12 @@ const styles = () =>
         cursor: 'pointer'
       }
     },
-    colors: {
-      backgroundColor: 'grey'
+    swatch: {
+      display: 'inline-block',
+      height: '25%',
+      marginBottom: '-4px',
+      position: 'relative',
+      width: '20%',
     },
     title: {
       alignItems: 'center',
@@ -31,10 +46,6 @@ const styles = () =>
       paddingTop: '0.5rem',
       position: 'relative',
     },
-    emoji: {
-      marginLeft: '0.5rem',
-      fontSize: '1.5rem'
-    }
   })
 
 interface Props extends WithStyles<typeof styles> {
@@ -46,10 +57,18 @@ interface Props extends WithStyles<typeof styles> {
 
 const MiniPalette: React.FC<Props> = (props) => {
   {/*<Link to={`/palette/${p.id}`}>{p.name}</Link>*/}
-  const { classes, name, emoji } = props
+  const { classes, colors, name, emoji } = props
+  const swatches = colors.map(c => (
+    <div style={{background: c.hexValue }}
+         className={ classes.swatch }
+         key={ c.name }
+    />
+  ))
   return (
     <div className={ classes.root }>
-      <div className={ classes.colors }/>
+      <div className={ classes.colors }>
+        { swatches }
+      </div>
       <h5 className={ classes.title }>
         { name }
         <span className={ classes.emoji }>{ emoji }</span>
