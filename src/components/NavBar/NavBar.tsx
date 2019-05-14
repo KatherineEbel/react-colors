@@ -5,6 +5,7 @@ import './NavBar.css'
 import { IconButton, MenuItem, Select, Snackbar } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 type Props = {
   changeFormat: (value: string) => void
@@ -26,7 +27,7 @@ const NavBar: React.FC<Props> = (props) => {
   return (
     <header className="NavBar">
       <div className="logo">
-        <button type="button">React Colors</button>
+        <Link to="/">React Colors</Link>
       </div>
       <div className="slider">
         <span>(Level: {level})</span>

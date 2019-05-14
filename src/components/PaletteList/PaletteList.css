@@ -1,0 +1,10 @@
+.PaletteList--links {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.PaletteList--links a {
+    text-decoration: none;
+}
