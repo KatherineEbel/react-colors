@@ -65,11 +65,16 @@ export function generatePalette(starterPalette: IPalette): ChromaPalette {
 
 export interface IShadePalette {
   colors: { [n: number]: IColor };
+  palette: {
+    name: string;
+    emoji: string;
+  };
 }
 export const getShades = (
   palette: ChromaPalette,
   color: string
 ): IShadePalette => {
+  const { name, emoji } = palette;
   const colors = palette.colors;
   const levels = Object.keys(colors);
   return levels.reduce(
@@ -80,6 +85,6 @@ export const getShades = (
       }
       return shades;
     },
-    { colors: {} }
+    { palette: { name, emoji }, colors: {} }
   );
 };

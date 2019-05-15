@@ -1,0 +1,13 @@
+.PaletteFooter {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+  height: 5vh;
+}
+
+.emoji {
+  font-size: 1.5rem;
+  margin: 0 1rem;
+}
