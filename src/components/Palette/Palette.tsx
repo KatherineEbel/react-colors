@@ -16,7 +16,11 @@ export const Palette: React.FC<Props> = ({ palette }) => {
     setFormat(value)
   }
   const swatches = colors[level].map((c: IColor) => (
-    <Swatch background={ c[format]} name={ c.name } key={ c.id }/>)
+    <Swatch background={ c[format]}
+            name={ c.name }
+            key={ c.id }
+            moreURL={`/palettes/${palette.id}/${c.id}`}
+            />)
   )
   return (
     <div className="Palette">
