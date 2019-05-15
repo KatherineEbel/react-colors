@@ -36,6 +36,10 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
