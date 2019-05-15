@@ -6,19 +6,25 @@ import { Link } from 'react-router-dom'
 
 export interface ISwatchProps {
   background: string
+  moreURL: string
   name: string
 }
-export const Swatch: React.FC<ISwatchProps> = props => {
-  const [copied, setCopied] = useState(false)
-  const { background, name } = props
+
+export const Swatch: React.FC<ISwatchProps> = (
+  {
+    background,
+    moreURL,
+    name,
+  }) => {
+  const [ copied, setCopied ] = useState (false)
   const handleCopy = () => {
-    setCopied(true)
-    setTimeout(() => {
-      setCopied(false)
+    setCopied (true)
+    setTimeout (() => {
+      setCopied (false)
     }, 1500)
   }
   return (
-    <CopyToClipboard onCopy={ handleCopy } text={ background }>
+    <CopyToClipboard onCopy={handleCopy} text={background}>
       <div className="Swatch"
            style={{ background }}
       >
@@ -27,10 +33,10 @@ export const Swatch: React.FC<ISwatchProps> = props => {
         />
         <div className="overlay--message">
           <h1>copied!</h1>
-          <p>{ background }</p>
+          <p>{background}</p>
         </div>
         <div className="Swatch--content">
-          <span>{ name }</span>
+          <span>{name}</span>
         </div>
         <button className="Swatch--copy"
                 type="button"
@@ -38,8 +44,8 @@ export const Swatch: React.FC<ISwatchProps> = props => {
           Copy
         </button>
         <Link className='Swatch--seeMore'
-              onClick={e => e.stopPropagation()}
-              to='/'
+              onClick={e => e.stopPropagation ()}
+              to={ moreURL }
         >More</Link>
       </div>
     </CopyToClipboard>
