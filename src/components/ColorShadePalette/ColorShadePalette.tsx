@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { IColor, IShadePalette } from '../../utils/colorHelpers'
-import { Swatch } from '../Swatch/Swatch'
+import Swatch from '../Swatch/Swatch'
 import { useState } from 'react'
 import NavBar from '../NavBar/NavBar'
 import PaletteFooter from '../PaletteFooter/PaletteFooter'

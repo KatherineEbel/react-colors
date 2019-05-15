@@ -1,24 +1,24 @@
-import * as React from "react";
-import { Swatch } from "../Swatch/Swatch";
-import { ChromaPalette, IColor } from "../../utils/colorHelpers";
-import "./Palette.css";
-import { useState } from "react";
-import NavBar from "../../components/NavBar/NavBar";
-import PaletteFooter from "../PaletteFooter/PaletteFooter";
+import * as React from 'react'
+import Swatch from '../Swatch/Swatch'
+import { ChromaPalette, IColor } from '../../utils/colorHelpers'
+import './Palette.css'
+import { useState } from 'react'
+import NavBar from '../../components/NavBar/NavBar'
+import PaletteFooter from '../PaletteFooter/PaletteFooter'
 
 export type Props = {
-  palette: ChromaPalette;
-};
+  palette: ChromaPalette
+}
 export const Palette: React.FC<Props> = ({ palette }) => {
   const [format, setFormat]: [
     string,
     React.Dispatch<React.SetStateAction<string>>
-  ] = useState("hex");
-  const [level, setLevel] = useState(500);
-  const { colors, emoji, name } = palette;
+  ] = useState('hex')
+  const [level, setLevel] = useState(500)
+  const { colors, emoji, name } = palette
   const changeFormat = (value: string) => {
-    setFormat(value);
-  };
+    setFormat(value)
+  }
   const swatches = colors[level].map((c: IColor) => (
     <Swatch
       background={c[format]}
@@ -26,7 +26,7 @@ export const Palette: React.FC<Props> = ({ palette }) => {
       key={c.id}
       moreURL={`/palettes/${palette.id}/${c.id}`}
     />
-  ));
+  ))
   return (
     <div className="Palette">
       <NavBar
@@ -38,5 +38,5 @@ export const Palette: React.FC<Props> = ({ palette }) => {
       <div className="Palette--colors">{swatches}</div>
       <PaletteFooter title={name} emoji={emoji} />
     </div>
-  );
-};
+  )
+}

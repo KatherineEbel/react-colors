@@ -22,7 +22,6 @@
   text-transform: uppercase;
 }
 
-.Swatch--copy,
 .Swatch--back {
   background: rgba(255, 255, 255, 0.3);
   border: none;
@@ -46,28 +45,6 @@
 
 .Swatch--back {
   padding: 0.5rem;
-}
-
-.Swatch--copy {
-  opacity: 0;
-}
-.Swatch:hover .Swatch--copy {
-  opacity: 1;
-}
-
-.Swatch--seeMore {
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  bottom: 0;
-  color: white;
-  height: 30px;
-  line-height: 30px;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  width: 60px;
 }
 
 .Swatch--overlay {
