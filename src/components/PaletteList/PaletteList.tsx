@@ -5,6 +5,7 @@ import { WithStyles } from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { IPalette } from '../../utils/seedColors'
 import MiniPalette from '../MiniPalette/MiniPalette'
+import { Link } from 'react-router-dom'
 
 const styles = () =>
   createStyles({
@@ -13,7 +14,7 @@ const styles = () =>
       backgroundColor: 'blue',
       display: 'flex',
       height: '100vh',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     container: {
       alignItems: 'flex-start',
@@ -30,10 +31,14 @@ const styles = () =>
       width: '100%',
     },
     nav: {
+      alignItems: 'center',
       color: 'white',
       display: 'flex',
       justifyContent: 'space-between',
       width: '100%',
+      '& a': {
+        color: 'white',
+      },
     },
   })
 
@@ -42,26 +47,28 @@ interface IPaletteListProps extends WithStyles<typeof styles> {
   palettes: IPalette[]
 }
 
-const PaletteList: React.FC<IPaletteListProps> = ({ classes, history, palettes }) => {
+const PaletteList: React.FC<IPaletteListProps> = ({
+  classes,
+  history,
+  palettes,
+}) => {
   const pushPalette = (id: string) => {
     history.push(`palettes/${id}`)
   }
 
   const { root, container, miniPalettes, nav } = classes
   const links = palettes.map(p => (
-    <MiniPalette {...p} goToPalette={ pushPalette.bind(null, p.id)}/>
+    <MiniPalette {...p} goToPalette={pushPalette.bind(null, p.id)} />
   ))
 
-
   return (
-    <div className={ root }>
-      <div className={ container }>
-        <nav className={ nav }>
+    <div className={root}>
+      <div className={container}>
+        <nav className={nav}>
           <h1>React Colors</h1>
+          <Link to="/palettes/new">Create Palette</Link>
         </nav>
-        <div className={ miniPalettes }>
-          { links }
-        </div>
+        <div className={miniPalettes}>{links}</div>
       </div>
     </div>
   )

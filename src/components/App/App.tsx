@@ -5,6 +5,7 @@ import { Redirect, Route, RouteComponentProps, Switch } from 'react-router'
 import Palette from '../Palette/Palette'
 import PaletteList from '../PaletteList/PaletteList'
 import ColorShadePalette from '../ColorShadePalette/ColorShadePalette'
+import NewPaletteForm from '../NewPaletteForm/NewPaletteForm'
 
 type Params = {
   colorId?: string
@@ -41,6 +42,7 @@ const App: React.FC = () => {
           <PaletteList palettes={seedPalettes} history={history} />
         )}
       />
+      <Route exact path="/palettes/new" render={() => <NewPaletteForm />} />
       <Route
         exact
         path="/palettes/:paletteId"
