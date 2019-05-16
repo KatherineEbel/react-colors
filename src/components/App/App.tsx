@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import seedPalettes from '../../utils/seedColors'
 import { generatePalette, getShades } from '../../utils/colorHelpers'
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router'

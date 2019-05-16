@@ -4,20 +4,8 @@ import { ChromaPalette, IColor } from '../../utils/colorHelpers'
 import { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import PaletteFooter from '../PaletteFooter/PaletteFooter'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-
-const styles = () =>
-  createStyles({
-    palette: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100vh',
-    },
-    colors: {
-      height: '90%',
-      position: 'relative',
-    },
-  })
+import { withStyles, WithStyles } from '@material-ui/styles'
+import { styles } from '../../styles/PaletteStyles'
 
 interface Props extends WithStyles<typeof styles> {
   palette: ChromaPalette
