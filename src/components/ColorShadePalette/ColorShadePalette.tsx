@@ -9,6 +9,10 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 
 const styles = () =>
   createStyles({
+    colors: {
+      height: '90%',
+      position: 'relative',
+    },
     container: {
       cursor: 'pointer',
       display: 'inline-block',
@@ -38,6 +42,11 @@ const styles = () =>
       transition: 'opacity 0.3s ease-in-out',
       width: '100px',
     },
+    palette: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+    },
   })
 interface Props extends WithStyles<typeof styles> {
   shades: IShadePalette
@@ -52,9 +61,9 @@ const ColorShadePalette: React.FC<Props> = ({ classes, shades }) => {
     return <Swatch background={f} key={id} name={name} />
   })
   return (
-    <div className="ColorShadePalette Palette">
+    <div className={classes.palette}>
       <NavBar changeFormat={setFormat} format={format} />
-      <div className="Palette--colors">
+      <div className={classes.colors}>
         {swatches}
         <div className={classes.container} style={{ background: '#333' }}>
           <Link

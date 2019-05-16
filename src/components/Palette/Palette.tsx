@@ -1,15 +1,29 @@
 import * as React from 'react'
 import Swatch from '../Swatch/Swatch'
 import { ChromaPalette, IColor } from '../../utils/colorHelpers'
-import './Palette.css'
 import { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import PaletteFooter from '../PaletteFooter/PaletteFooter'
+import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 
-export type Props = {
+const styles = () =>
+  createStyles({
+    palette: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+    },
+    colors: {
+      height: '90%',
+      position: 'relative',
+    },
+  })
+
+interface Props extends WithStyles<typeof styles> {
   palette: ChromaPalette
 }
-export const Palette: React.FC<Props> = ({ palette }) => {
+
+const Palette: React.FC<Props> = ({ classes, palette }) => {
   const [format, setFormat]: [
     string,
     React.Dispatch<React.SetStateAction<string>>
@@ -28,15 +42,17 @@ export const Palette: React.FC<Props> = ({ palette }) => {
     />
   ))
   return (
-    <div className="Palette">
+    <div className={classes.palette}>
       <NavBar
         level={level}
         changeFormat={changeFormat}
         format={format}
         setLevel={setLevel}
       />
-      <div className="Palette--colors">{swatches}</div>
+      <div className={classes.colors}>{swatches}</div>
       <PaletteFooter title={name} emoji={emoji} />
     </div>
   )
 }
+
+export default withStyles(styles)(Palette)
