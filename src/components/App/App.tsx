@@ -1,37 +1,37 @@
-import React from "react";
-import "./App.css";
-import seedPalettes from "../../utils/seedColors";
-import { generatePalette, getShades } from "../../utils/colorHelpers";
-import { Redirect, Route, RouteComponentProps, Switch } from "react-router";
-import { Palette } from "../Palette/Palette";
-import PaletteList from "../PaletteList/PaletteList";
-import ColorShadePalette from "../ColorShadePalette/ColorShadePalette";
+import React from 'react'
+import './App.css'
+import seedPalettes from '../../utils/seedColors'
+import { generatePalette, getShades } from '../../utils/colorHelpers'
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router'
+import Palette from '../Palette/Palette'
+import PaletteList from '../PaletteList/PaletteList'
+import ColorShadePalette from '../ColorShadePalette/ColorShadePalette'
 
 type Params = {
-  colorId?: string;
-  paletteId: string;
-};
+  colorId?: string
+  paletteId: string
+}
 
 const App: React.FC = () => {
   // TODO: make diff functions for Palette and ColorShadePalette?
   const matchPalette = (
-    routeProps: RouteComponentProps<Params>
+    routeProps: RouteComponentProps<Params>,
   ): React.ReactElement => {
-    const { params } = routeProps.match;
-    const { paletteId, colorId } = params;
-    const palette = seedPalettes.find(p => p.id === paletteId);
-    let chromaPalette;
+    const { params } = routeProps.match
+    const { paletteId, colorId } = params
+    const palette = seedPalettes.find(p => p.id === paletteId)
+    let chromaPalette
     if (palette) {
-      chromaPalette = generatePalette(palette);
+      chromaPalette = generatePalette(palette)
     } else {
-      return <Redirect to="/" />;
+      return <Redirect to="/" />
     }
     if (colorId) {
-      return <ColorShadePalette shades={getShades(chromaPalette, colorId)} />;
+      return <ColorShadePalette shades={getShades(chromaPalette, colorId)} />
     } else {
-      return <Palette palette={chromaPalette} />;
+      return <Palette palette={chromaPalette} />
     }
-  };
+  }
 
   return (
     <Switch>
@@ -52,7 +52,7 @@ const App: React.FC = () => {
         render={routeProps => matchPalette(routeProps)}
       />
     </Switch>
-  );
-};
+  )
+}
 
-export default App;
+export default App
