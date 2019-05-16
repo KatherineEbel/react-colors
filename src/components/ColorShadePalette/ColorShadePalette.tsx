@@ -5,11 +5,45 @@ import { useState } from 'react'
 import NavBar from '../NavBar/NavBar'
 import PaletteFooter from '../PaletteFooter/PaletteFooter'
 import { Link } from 'react-router-dom'
+import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 
-interface IProps {
+const styles = () =>
+  createStyles({
+    container: {
+      cursor: 'pointer',
+      display: 'inline-block',
+      height: '50%',
+      margin: '0 auto -4px auto',
+      position: 'relative',
+      width: '20%',
+    },
+    goBack: {
+      background: 'rgba(255, 255, 255, 0.3)',
+      border: 'none',
+      color: 'white',
+      cursor: 'pointer',
+      display: 'block',
+      fontSize: '1rem',
+      height: '30px',
+      left: '50%',
+      lineHeight: '30px',
+      margin: '-15px 0 0 -50px',
+      outline: 'none',
+      padding: '0.5rem',
+      position: 'absolute',
+      textAlign: 'center',
+      textDecoration: 'none',
+      textTransform: 'uppercase',
+      top: '50%',
+      transition: 'opacity 0.3s ease-in-out',
+      width: '100px',
+    },
+  })
+interface Props extends WithStyles<typeof styles> {
   shades: IShadePalette
 }
-const ColorShadePalette: React.FC<IProps> = ({ shades }) => {
+
+const ColorShadePalette: React.FC<Props> = ({ classes, shades }) => {
   const [format, setFormat] = useState('hex')
   const { colors } = shades
   const { name, emoji } = shades.palette
@@ -22,9 +56,9 @@ const ColorShadePalette: React.FC<IProps> = ({ shades }) => {
       <NavBar changeFormat={setFormat} format={format} />
       <div className="Palette--colors">
         {swatches}
-        <div className="Swatch" style={{ background: '#333' }}>
+        <div className={classes.container} style={{ background: '#333' }}>
           <Link
-            className="Swatch--back"
+            className={classes.goBack}
             style={{ background: swatches[5].props.background }}
             to={`/palettes/${shades.palette.id}`}
           >
@@ -37,4 +71,4 @@ const ColorShadePalette: React.FC<IProps> = ({ shades }) => {
   )
 }
 
-export default ColorShadePalette
+export default withStyles(styles)(ColorShadePalette)

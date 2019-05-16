@@ -3,7 +3,6 @@ import chroma from 'chroma-js'
 import { createStyles, makeStyles } from '@material-ui/styles'
 import { useState } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import './Swatch.css'
 import { Link } from 'react-router-dom'
 
 interface Props {
