@@ -6,14 +6,15 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import './Swatch.css'
 import { Link } from 'react-router-dom'
 
-interface StyleProps {
+interface Props {
   background: string
   moreURL?: string
+  name: string
 }
 
 const styles = () =>
   createStyles({
-    Swatch: (props: StyleProps) => ({
+    Swatch: (props: Props) => ({
       cursor: 'pointer',
       display: 'inline-block',
       height: props.moreURL ? '25%' : '50%',
@@ -21,16 +22,76 @@ const styles = () =>
       position: 'relative',
       width: '20%',
       '&:hover button': {
-        opacity: 1
-      }
+        opacity: 1,
+      },
     }),
-    copyText: (props: StyleProps) => ({
-      color: chroma(props.background).luminance() >= 0.7 ? '#444' : 'white'
+    content: {
+      bottom: '0',
+      color: '#000',
+      fontSize: '0.7rem',
+      padding: '0.7rem',
+      position: 'absolute',
+      left: 0,
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+    },
+    copyText: (props: Props) => ({
+      color: chroma(props.background).luminance() >= 0.7 ? '#444' : 'white',
     }),
-    colorName: (props: StyleProps) => ({
-      color: chroma(props.background).luminance() <= 0.1 ? 'white' : '#444'
+    colorName: (props: Props) => ({
+      color: chroma(props.background).luminance() <= 0.1 ? 'white' : '#444',
     }),
-    seeMore: (props: StyleProps) => ({
+    overlay: {
+      height: '100%',
+      opacity: 0,
+      transform: 'scale(0.1)',
+      transition: 'transform 0.2s ease-in-out',
+      width: '100%',
+      zIndex: 0,
+    },
+    overlayMessage: {
+      alignItems: 'center',
+      color: 'white',
+      display: 'flex',
+      flexDirection: 'column',
+      fontSize: '4rem',
+      height: '150px',
+      justifyContent: 'center',
+      left: 0,
+      opacity: 0,
+      overflow: 'visible',
+      position: 'fixed',
+      right: 0,
+      top: '40%',
+      transform: 'scale(0.1)',
+      '& h1': {
+        fontWeight: 400,
+        marginBottom: 0,
+        padding: '1rem',
+        textAlign: 'center',
+        textShadow: '1px 2px #454545',
+        textTransform: 'uppercase',
+      },
+      '& p': {
+        fontSize: '2rem',
+        fontWeight: 100,
+      },
+    },
+    overlayVisible: {
+      opacity: 1,
+      position: 'absolute',
+      transform: 'scale(50)',
+      zIndex: 10,
+    },
+    showMessage: {
+      background: 'rgba(255, 255, 255, 0.3)',
+      opacity: 1,
+      transform: 'scale(1)',
+      transition: 'all 0.3s ease-in-out 0.3s',
+      width: '100%',
+      zIndex: 25,
+    },
+    seeMore: (props: Props) => ({
       background: 'rgba(255, 255, 255, 0.3)',
       border: 'none',
       bottom: '0',
@@ -42,9 +103,9 @@ const styles = () =>
       textAlign: 'center',
       textDecoration: 'none',
       textTransform: 'uppercase',
-      width: '60px'
+      width: '60px',
     }),
-    copyButton: (props: StyleProps) => ({
+    copyButton: (props: Props) => ({
       background: 'rgba(255, 255, 255, 0.3)',
       border: 'none',
       color: chroma(props.background).luminance() >= 0.7 ? '#444' : 'white',
@@ -65,16 +126,12 @@ const styles = () =>
       transition: 'opacity 0.3s ease-in-out',
       width: '100px',
       '&:hover': {
-        opacity: 1
-      }
-    })
+        opacity: 1,
+      },
+    }),
   })
 
 const useStyles = makeStyles(styles)
-
-interface Props extends StyleProps {
-  name: string
-}
 
 const Swatch: React.FC<Props> = (props: Props) => {
   const { background, moreURL, name } = props
@@ -91,13 +148,19 @@ const Swatch: React.FC<Props> = (props: Props) => {
       <div className={classes.Swatch} style={{ background }}>
         <div
           style={{ background }}
-          className={`Swatch--overlay ${copied ? 'show' : ''}`}
+          className={`${classes.overlay} ${
+            copied ? classes.overlayVisible : ''
+          }`}
         />
-        <div className="overlay--message">
+        <div
+          className={`${classes.overlayMessage} ${
+            copied ? classes.showMessage : ''
+          }`}
+        >
           <h1>copied!</h1>
           <p className={classes.copyText}>{background}</p>
         </div>
-        <div className="Swatch--content">
+        <div className={classes.content}>
           <span className={classes.colorName}>{name}</span>
         </div>
         <button className={classes.copyButton} type="button">
