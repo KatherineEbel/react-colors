@@ -14,8 +14,9 @@ import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
 import MenuIcon from '@material-ui/icons/Menu'
-import { ChromePicker } from 'react-color'
+import { ChromePicker, ColorResult } from 'react-color'
 import Button from '@material-ui/core/Button'
+import DraggableSwatch from '../DraggableSwatch'
 
 const drawerWidth = 320
 
@@ -61,6 +62,7 @@ const styles = (theme: Theme) =>
     },
     content: {
       flexGrow: 1,
+      height: 'calc(100vh - 64px)',
       padding: theme.spacing.unit * 3,
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
@@ -75,6 +77,9 @@ const styles = (theme: Theme) =>
       }),
       marginLeft: 0,
     },
+    swatches: {
+      height: '100vh',
+    },
   })
 
 interface Props extends WithStyles<typeof styles> {
@@ -82,8 +87,13 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const NewPaletteForm: React.FC<Props> = ({ classes, theme }) => {
-  const [open, toggleOpen] = useState(true)
+  const [open, toggleOpen] = useState<boolean>(true)
+  const [color, setColor] = useState<string>('blue')
+  const [colors, setColors] = useState<string[]>([])
+
+  const addColor = () => setColors([...colors, color])
   const toggleDrawer = () => toggleOpen(!open)
+  const handleColorChange = ({ hex }: ColorResult) => setColor(hex)
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -133,11 +143,8 @@ const NewPaletteForm: React.FC<Props> = ({ classes, theme }) => {
         <Button variant="contained" color="primary">
           Random Color
         </Button>
-        <ChromePicker
-          color="blue"
-          onChangeComplete={newColor => console.log(newColor)}
-        />
-        <Button variant="contained" color="primary">
+        <ChromePicker color={color} onChangeComplete={handleColorChange} />
+        <Button variant="contained" color="primary" onClick={addColor}>
           Add Color
         </Button>
         <Divider />
@@ -148,6 +155,11 @@ const NewPaletteForm: React.FC<Props> = ({ classes, theme }) => {
         })}
       >
         <div className={classes.drawerHeader} />
+        <ul className={classes.swatches}>
+          {colors.map(color => (
+            <DraggableSwatch color={color} />
+          ))}
+        </ul>
       </main>
     </div>
   )
