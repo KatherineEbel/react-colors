@@ -14,8 +14,10 @@ import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
 import MenuIcon from '@material-ui/icons/Menu'
+import { ChromePicker } from 'react-color'
+import Button from '@material-ui/core/Button'
 
-const drawerWidth = 260
+const drawerWidth = 320
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -80,7 +82,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const NewPaletteForm: React.FC<Props> = ({ classes, theme }) => {
-  const [open, toggleOpen] = useState(false)
+  const [open, toggleOpen] = useState(true)
   const toggleDrawer = () => toggleOpen(!open)
   return (
     <div className={classes.root}>
@@ -124,6 +126,20 @@ const NewPaletteForm: React.FC<Props> = ({ classes, theme }) => {
           </IconButton>
         </div>
         <Divider />
+        <Typography variant="h4">Design Your Palette</Typography>
+        <Button variant="contained" color="secondary">
+          Clear Palette
+        </Button>
+        <Button variant="contained" color="primary">
+          Random Color
+        </Button>
+        <ChromePicker
+          color="blue"
+          onChangeComplete={newColor => console.log(newColor)}
+        />
+        <Button variant="contained" color="primary">
+          Add Color
+        </Button>
         <Divider />
       </Drawer>
       <main
