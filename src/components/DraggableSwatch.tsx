@@ -37,14 +37,23 @@ const styles = () =>
 
 interface Props extends WithStyles<typeof styles> {
   color: string
+  handleDelete: (colorName: string) => void
   name: string
 }
-const DraggableSwatch: React.FC<Props> = ({ classes, color, name }) => {
+const DraggableSwatch: React.FC<Props> = ({
+  classes,
+  color,
+  handleDelete,
+  name,
+}) => {
   return (
     <li className={classes.root} style={{ background: color }}>
       <div className={classes.swatchContent}>
         <span> {name}</span>
-        <DeleteRounded className={classes.delete} />
+        <DeleteRounded
+          className={classes.delete}
+          onClick={() => handleDelete(name)}
+        />
       </div>
     </li>
   )

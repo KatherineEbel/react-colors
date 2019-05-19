@@ -116,6 +116,8 @@ const NewPaletteForm: React.FC<Props> = ({
     setColors([...colors, newColor])
   }
   const handleColorChange = ({ hex }: ColorResult) => setColor(hex)
+  const handleDelete = (colorName: string) =>
+    setColors(colors.filter(({ name }) => name !== colorName))
   const handleSave = () => {
     const id = paletteName.toLowerCase().replace(/ /g, '-')
     const palette: IPalette = { id, emoji: '', name: paletteName, colors }
@@ -239,7 +241,12 @@ const NewPaletteForm: React.FC<Props> = ({
         {color}
         <ul className={classes.swatches}>
           {colors.map(({ hex, name }) => (
-            <DraggableSwatch color={hex} name={name} key={hex} />
+            <DraggableSwatch
+              color={hex}
+              handleDelete={handleDelete}
+              name={name}
+              key={name}
+            />
           ))}
         </ul>
       </main>
