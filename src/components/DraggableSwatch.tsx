@@ -13,11 +13,17 @@ const styles = () =>
       width: '20%',
     },
   })
+
 interface Props extends WithStyles<typeof styles> {
   color: string
+  name: string
 }
-const DraggableSwatch: React.FC<Props> = ({ classes, color }) => {
-  return <li className={classes.root} style={{ background: color }} />
+const DraggableSwatch: React.FC<Props> = ({ classes, color, name }) => {
+  return (
+    <li className={classes.root} style={{ background: color }}>
+      {name}
+    </li>
+  )
 }
 
 export default withStyles(styles)(DraggableSwatch)

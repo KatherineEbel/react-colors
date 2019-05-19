@@ -1,5 +1,5 @@
-import React from 'react'
-import seedPalettes from '../../utils/seedColors'
+import React, { useState } from 'react'
+import seedPalettes, { IPalette } from '../../utils/seedColors'
 import { generatePalette, getShades } from '../../utils/colorHelpers'
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router'
 import Palette from '../Palette/Palette'
@@ -14,12 +14,13 @@ type Params = {
 
 const App: React.FC = () => {
   // TODO: make diff functions for Palette and ColorShadePalette?
+  const [palettes, setPalettes] = useState<IPalette[]>(seedPalettes)
   const matchPalette = (
     routeProps: RouteComponentProps<Params>,
   ): React.ReactElement => {
     const { params } = routeProps.match
     const { paletteId, colorId } = params
-    const palette = seedPalettes.find(p => p.id === paletteId)
+    const palette = palettes.find(p => p.id === paletteId)
     let chromaPalette
     if (palette) {
       chromaPalette = generatePalette(palette)
@@ -33,16 +34,30 @@ const App: React.FC = () => {
     }
   }
 
+  const savePalette = (palette: IPalette) => {
+    setPalettes(palettes => [...palettes, palette])
+  }
+
   return (
     <Switch>
       <Route
         exact
         path="/"
         render={({ history }) => (
-          <PaletteList palettes={seedPalettes} history={history} />
+          <PaletteList palettes={palettes} history={history} />
         )}
       />
-      <Route exact path="/palettes/new" render={() => <NewPaletteForm />} />
+      <Route
+        exact
+        path="/palettes/new"
+        render={({ history }) => (
+          <NewPaletteForm
+            history={history}
+            paletteNames={palettes.map(({ name }) => name)}
+            savePalette={savePalette}
+          />
+        )}
+      />
       <Route
         exact
         path="/palettes/:paletteId"

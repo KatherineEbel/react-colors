@@ -15,13 +15,14 @@ const MiniPalette: React.FC<Props> = props => {
   const { classes, colors, goToPalette, id, name, emoji } = props
   const swatches = colors.map(c => (
     <div
-      style={{ background: c.hexValue }}
+      style={{ background: c.hex }}
       className={classes.swatch}
       key={c.name}
     />
   ))
 
   const handleClick = () => {
+    console.log('Clicked')
     goToPalette(id)
   }
 

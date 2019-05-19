@@ -30,7 +30,7 @@ function getRange(hexValue: string): [string, string, string] {
       .darken(1.4)
       .hex(),
     hexValue,
-    end
+    end,
   ]
 }
 
@@ -40,11 +40,11 @@ export function generatePalette(starterPalette: IPalette): ChromaPalette {
       result[level] = []
       return result
     },
-    {}
+    {},
   )
   return starterPalette.colors.reduce(
     (palette: ChromaPalette, swatch: Swatch) => {
-      const scale = generateScale(swatch.hexValue, 10).reverse()
+      const scale = generateScale(swatch.hex, 10).reverse()
       scale.forEach((color: string, i: number) => {
         palette.colors[LEVELS[i]].push({
           id: swatch.name.toLocaleLowerCase().replace(/ /g, '-'),
@@ -54,12 +54,12 @@ export function generatePalette(starterPalette: IPalette): ChromaPalette {
           rgba: chroma(scale[i])
             .css()
             .replace('rgb', 'rgba')
-            .replace(')', ',1.0)')
+            .replace(')', ',1.0)'),
         })
       })
       return palette
     },
-    { ...starterPalette, colors }
+    { ...starterPalette, colors },
   )
 }
 
@@ -73,7 +73,7 @@ export interface IShadePalette {
 }
 export const getShades = (
   palette: ChromaPalette,
-  color: string
+  color: string,
 ): IShadePalette => {
   const { emoji, id, name } = palette
   const colors = palette.colors
@@ -90,6 +90,6 @@ export const getShades = (
       }
       return shades
     },
-    { palette: { emoji, id, name }, colors: [] }
+    { palette: { emoji, id, name }, colors: [] },
   )
 }

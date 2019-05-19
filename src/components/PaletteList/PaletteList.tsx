@@ -53,12 +53,13 @@ const PaletteList: React.FC<IPaletteListProps> = ({
   palettes,
 }) => {
   const pushPalette = (id: string) => {
+    console.log('Pushing palette', id)
     history.push(`palettes/${id}`)
   }
 
   const { root, container, miniPalettes, nav } = classes
   const links = palettes.map(p => (
-    <MiniPalette {...p} goToPalette={pushPalette.bind(null, p.id)} />
+    <MiniPalette key={p.id} {...p} goToPalette={pushPalette.bind(null, p.id)} />
   ))
 
   return (
