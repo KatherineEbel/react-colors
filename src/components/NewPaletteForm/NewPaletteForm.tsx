@@ -15,10 +15,12 @@ import Divider from '@material-ui/core/Divider'
 import MenuIcon from '@material-ui/icons/Menu'
 import { ChromePicker, ColorResult } from 'react-color'
 import Button from '@material-ui/core/Button'
-import DraggableSwatch from '../DraggableSwatch'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import { IPalette } from '../../utils/seedColors'
 import { History } from 'history'
+import DraggableSwatchList from '../DraggableSwatchList'
+import arrayMove from 'array-move'
+import { SortEndHandler } from 'react-sortable-hoc'
 
 const drawerWidth = 320
 
@@ -78,9 +80,6 @@ const styles = (theme: Theme) =>
         duration: theme.transitions.duration.enteringScreen,
       }),
       marginLeft: 0,
-    },
-    swatches: {
-      height: '100vh',
     },
   })
 
@@ -147,18 +146,23 @@ class NewPaletteForm extends React.Component<Props, State> {
     history.push('/')
   }
 
+  onSortEnd: SortEndHandler = ({ oldIndex, newIndex }) => {
+    this.setState(({ colors }) => ({
+      colors: arrayMove<Color>(colors, oldIndex, newIndex),
+    }))
+  }
   toggleDrawer = () => this.setState(prevState => ({ open: !prevState.open }))
 
-  componentDidMount() {
-    const { colors } = this.state
+  componentDidMount(): void {
     ValidatorForm.addValidationRule('isNameUnique', (value: string) => {
+      const { colors } = this.state
       return colors.every(
         color => color.name.toLowerCase() !== value.toLowerCase(),
       )
     })
 
     ValidatorForm.addValidationRule('isColorUnique', () => {
-      const { hex: color } = this.state
+      const { hex: color, colors } = this.state
       return colors.every(({ hex }) => hex !== color)
     })
 
@@ -168,6 +172,26 @@ class NewPaletteForm extends React.Component<Props, State> {
       return !paletteNames.includes(paletteName)
     })
   }
+
+  // componentDidMount() {
+  //   const { colors } = this.state
+  //   ValidatorForm.addValidationRule('isNameUnique', (value: string) => {
+  //     return colors.every(
+  //       color => color.name.toLowerCase() !== value.toLowerCase(),
+  //     )
+  //   })
+  //
+  //   ValidatorForm.addValidationRule('isColorUnique', () => {
+  //     const { hex: color } = this.state
+  //     return colors.every(({ hex }) => hex !== color)
+  //   })
+  //
+  //   ValidatorForm.addValidationRule('isPaletteNameUnique', () => {
+  //     const { paletteName } = this.state
+  //     const { paletteNames } = this.props
+  //     return !paletteNames.includes(paletteName)
+  //   })
+  // }
 
   render() {
     const { classes, theme } = this.props
@@ -268,16 +292,12 @@ class NewPaletteForm extends React.Component<Props, State> {
           })}
         >
           <div className={classes.drawerHeader} />
-          <ul className={classes.swatches}>
-            {colors.map(({ hex, name }) => (
-              <DraggableSwatch
-                color={hex}
-                handleDelete={this.handleDelete}
-                name={name}
-                key={name}
-              />
-            ))}
-          </ul>
+          <DraggableSwatchList
+            axis="xy"
+            colors={colors}
+            handleDelete={this.handleDelete}
+            onSortEnd={this.onSortEnd}
+          />
         </main>
       </div>
     )

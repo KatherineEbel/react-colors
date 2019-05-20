@@ -2,6 +2,7 @@ import * as React from 'react'
 import withStyles, { WithStyles } from '@material-ui/styles/withStyles'
 import createStyles from '@material-ui/styles/createStyles'
 import { DeleteRounded } from '@material-ui/icons'
+import { SortableElement } from 'react-sortable-hoc'
 
 const styles = () =>
   createStyles({
@@ -40,12 +41,7 @@ interface Props extends WithStyles<typeof styles> {
   handleDelete: (colorName: string) => void
   name: string
 }
-const DraggableSwatch: React.FC<Props> = ({
-  classes,
-  color,
-  handleDelete,
-  name,
-}) => {
+const Element: React.FC<Props> = ({ classes, color, handleDelete, name }) => {
   return (
     <li className={classes.root} style={{ background: color }}>
       <div className={classes.swatchContent}>
@@ -59,4 +55,5 @@ const DraggableSwatch: React.FC<Props> = ({
   )
 }
 
+const DraggableSwatch = SortableElement(Element)
 export default withStyles(styles)(DraggableSwatch)
