@@ -1,5 +1,6 @@
 import chroma from 'chroma-js'
 import { IPalette, Swatch } from './seedColors'
+import colorNamer, { Color, Palette } from 'color-namer'
 
 const LEVELS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
@@ -92,4 +93,35 @@ export const getShades = (
     },
     { palette: { emoji, id, name }, colors: [] },
   )
+}
+
+// add index signature to access values by key
+interface IndexedRecord extends Record<Palette, Color[]> {
+  [key: string]: Color[]
+}
+
+export function getRandomHexString(): Color {
+  const max = 1 << 24
+  const hexString =
+    '#' +
+    (max + Math.floor(Math.random() * max))
+      .toString(16)
+      .slice(-6)
+      .toUpperCase()
+  const names = colorNamer(hexString) as IndexedRecord
+  const color = Object.keys(names)
+    .map(key => names[key][0])
+    .sort((a, b) => {
+      if (a.distance < b.distance) {
+        return -1
+      }
+      if (a.distance > b.distance) {
+        return 1
+      }
+      return 0
+    })[0]
+  if (!color.hex.startsWith('#')) {
+    color.hex = '#' + color.hex
+  }
+  return color
 }

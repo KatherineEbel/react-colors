@@ -21,6 +21,7 @@ import { History } from 'history'
 import DraggableSwatchList from '../DraggableSwatchList'
 import arrayMove from 'array-move'
 import { SortEndHandler } from 'react-sortable-hoc'
+import { getRandomHexString } from '../../utils/colorHelpers'
 
 const drawerWidth = 320
 
@@ -90,6 +91,10 @@ interface Props extends WithStyles<typeof styles> {
   theme: Theme
 }
 
+interface DefaultProps {
+  maxColors: number
+}
+
 export type Color = {
   name: string
   hex: string
@@ -103,7 +108,11 @@ interface State {
   paletteName: string
 }
 
-class NewPaletteForm extends React.Component<Props, State> {
+class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
+  static defaultProps: DefaultProps = {
+    maxColors: 20,
+  }
+
   state: State = {
     colors: [],
     colorName: '',
@@ -119,6 +128,10 @@ class NewPaletteForm extends React.Component<Props, State> {
       colorName: '',
       colors: [...prevState.colors, newColor],
     }))
+  }
+
+  clearColors = () => {
+    this.setState({ colors: [] })
   }
 
   handleChange = (target: HTMLInputElement) => {
@@ -151,6 +164,12 @@ class NewPaletteForm extends React.Component<Props, State> {
       colors: arrayMove<Color>(colors, oldIndex, newIndex),
     }))
   }
+
+  pickRandomColor = () => {
+    const { name, hex } = getRandomHexString()
+    this.setState(({ colors }) => ({ colors: [...colors, { name, hex }] }))
+  }
+
   toggleDrawer = () => this.setState(prevState => ({ open: !prevState.open }))
 
   componentDidMount(): void {
@@ -166,36 +185,17 @@ class NewPaletteForm extends React.Component<Props, State> {
       return colors.every(({ hex }) => hex !== color)
     })
 
-    ValidatorForm.addValidationRule('isPaletteNameUnique', () => {
-      const { paletteName } = this.state
-      const { paletteNames } = this.props
-      return !paletteNames.includes(paletteName)
+    ValidatorForm.addValidationRule('maxColorsMet', () => {
+      const { colors } = this.state
+      const { maxColors } = this.props
+      return colors.length === maxColors
     })
   }
 
-  // componentDidMount() {
-  //   const { colors } = this.state
-  //   ValidatorForm.addValidationRule('isNameUnique', (value: string) => {
-  //     return colors.every(
-  //       color => color.name.toLowerCase() !== value.toLowerCase(),
-  //     )
-  //   })
-  //
-  //   ValidatorForm.addValidationRule('isColorUnique', () => {
-  //     const { hex: color } = this.state
-  //     return colors.every(({ hex }) => hex !== color)
-  //   })
-  //
-  //   ValidatorForm.addValidationRule('isPaletteNameUnique', () => {
-  //     const { paletteName } = this.state
-  //     const { paletteNames } = this.props
-  //     return !paletteNames.includes(paletteName)
-  //   })
-  // }
-
   render() {
-    const { classes, theme } = this.props
+    const { classes, maxColors, theme } = this.props
     const { colors, colorName, hex, open, paletteName } = this.state
+    const paletteFull = colors.length >= maxColors
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -258,10 +258,19 @@ class NewPaletteForm extends React.Component<Props, State> {
           </div>
           <Divider />
           <Typography variant="h4">Design Your Palette</Typography>
-          <Button variant="contained" color="secondary">
+          <Button
+            color="secondary"
+            onClick={this.clearColors}
+            variant="contained"
+          >
             Clear Palette
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            color="primary"
+            disabled={paletteFull}
+            onClick={this.pickRandomColor}
+            variant="contained"
+          >
             Random Color
           </Button>
           <ChromePicker color={hex} onChangeComplete={this.handleColorChange} />
@@ -280,8 +289,13 @@ class NewPaletteForm extends React.Component<Props, State> {
               validators={['required', 'isNameUnique', 'isColorUnique']}
               value={colorName}
             />
-            <Button variant="contained" color="primary" type="submit">
-              Add Color
+            <Button
+              color="primary"
+              disabled={paletteFull}
+              type="submit"
+              variant="contained"
+            >
+              {paletteFull ? 'Palette Full' : 'Add Color'}
             </Button>
           </ValidatorForm>
           <Divider />
