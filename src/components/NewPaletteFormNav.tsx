@@ -9,21 +9,10 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Button from '@material-ui/core/Button'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import { Link } from 'react-router-dom'
+import styles from '../styles/NewPaletteFormNavStyles'
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 
-interface NewPaletteFormNavProps {
-  classes: Record<
-    | 'root'
-    | 'appBar'
-    | 'appBarShift'
-    | 'menuButton'
-    | 'hide'
-    | 'drawer'
-    | 'drawerPaper'
-    | 'drawerHeader'
-    | 'content'
-    | 'contentShift',
-    string
-  >
+interface NewPaletteFormNavProps extends WithStyles<typeof styles> {
   handleSave: (paletteName: string) => void
   open: boolean
   paletteNames: string[]
@@ -60,7 +49,7 @@ class NewPaletteFormNav extends React.Component<
     const { classes, toggleDrawer, open } = this.props
     const { newPaletteName } = this.state
     return (
-      <div className="NewPaletteFormNav">
+      <div className={classes.root}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -78,37 +67,39 @@ class NewPaletteFormNav extends React.Component<
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Persistent drawer
+            <Typography color="inherit" variant="h6" noWrap>
+              Create A Palette
             </Typography>
-            <ValidatorForm onSubmit={this.onSavePalette}>
-              <TextValidator
-                errorMessages={[
-                  'Palette name is required',
-                  'Palette names need to be unique',
-                ]}
-                name="paletteName"
-                placeholder="Palette Name"
-                onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
-                  this.setState({ newPaletteName: target.value })
-                }
-                validators={['required', 'paletteNameUnique']}
-                value={newPaletteName}
-              />
-              <Button color="primary" type="submit" variant="contained">
-                Save Palette
-              </Button>
-              <Link to="/">
-                <Button color="secondary" variant="contained">
-                  Go Back
-                </Button>
-              </Link>
-            </ValidatorForm>
           </Toolbar>
+          <ValidatorForm onSubmit={this.onSavePalette}>
+            <TextValidator
+              errorMessages={[
+                'Palette name is required',
+                'Palette names need to be unique',
+              ]}
+              name="paletteName"
+              placeholder="Palette Name"
+              onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
+                this.setState({ newPaletteName: target.value })
+              }
+              validators={['required', 'paletteNameUnique']}
+              value={newPaletteName}
+            />
+            <Button color="primary" type="submit" variant="contained">
+              Save Palette
+            </Button>
+          </ValidatorForm>
+          <div className={classes.navButtons}>
+            <Link to="/">
+              <Button color="secondary" variant="contained">
+                Go Back
+              </Button>
+            </Link>
+          </div>
         </AppBar>
       </div>
     )
   }
 }
 
-export default NewPaletteFormNav
+export default withStyles(styles, { withTheme: true })(NewPaletteFormNav)
