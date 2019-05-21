@@ -3,8 +3,35 @@ import { Button } from '@material-ui/core'
 import { ChromePicker, ColorResult } from 'react-color'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import { Color } from './NewPaletteForm/NewPaletteForm'
+import createStyles from '@material-ui/core/styles/createStyles'
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 
-interface ColorPickerFormProps {
+const styles = () =>
+  createStyles({
+    colorNameForm: {
+      '& button': {
+        fontSize: '1.2rem',
+        padding: '1rem',
+        width: '100%',
+      },
+    },
+    colorNameInput: {
+      background: '#ccc',
+      boxShadow: '1px 1px 1px #7a7676',
+      color: '#4d4d4d',
+      marginBottom: '1rem',
+      padding: '1rem',
+      width: '100%',
+    },
+    root: {
+      '& .chrome-picker': {
+        marginBottom: '1rem',
+        width: '100% !important',
+      },
+    },
+  })
+
+interface ColorPickerFormProps extends WithStyles<typeof styles> {
   currentColors: Color[]
   handleAddColor: (colorName: string, hexValue: string) => void
   paletteFull: boolean
@@ -56,15 +83,19 @@ class ColorPickerForm extends React.Component<
 
   render() {
     const { colorName, hexColor } = this.state
-    const { paletteFull } = this.props
+    const { classes, paletteFull } = this.props
     return (
-      <div>
+      <div className={classes.root}>
         <ChromePicker
           color={hexColor}
           onChangeComplete={this.handleColorChange}
         />
-        <ValidatorForm onSubmit={this.handleAddColor}>
+        <ValidatorForm
+          className={classes.colorNameForm}
+          onSubmit={this.handleAddColor}
+        >
           <TextValidator
+            className={classes.colorNameInput}
             onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
               this.setState({ colorName: target.value })
             }
@@ -92,4 +123,4 @@ class ColorPickerForm extends React.Component<
   }
 }
 
-export default ColorPickerForm
+export default withStyles(styles)(ColorPickerForm)

@@ -19,10 +19,18 @@ import { getRandomHexString } from '../../utils/colorHelpers'
 import NewPaletteFormNav from '../NewPaletteFormNav'
 import ColorPickerForm from '../ColorPickerForm'
 
-const drawerWidth = 320
+const drawerWidth = 360
 
 const styles = (theme: Theme) =>
   createStyles({
+    actionButtons: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      margin: '1em',
+      '& button:first-of-type': {
+        marginRight: '.5rem',
+      },
+    },
     root: {
       display: 'flex',
     },
@@ -31,11 +39,15 @@ const styles = (theme: Theme) =>
       flexShrink: 0,
     },
     drawerPaper: {
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'center',
       width: drawerWidth,
     },
     drawerHeader: {
       display: 'flex',
       alignItems: 'center',
+      alignSelf: 'flex-end',
       padding: '0 8px',
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
@@ -57,6 +69,14 @@ const styles = (theme: Theme) =>
       }),
       marginLeft: 0,
     },
+    drawerMain: {
+      alignItems: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      justifyContent: 'center',
+      width: '90%',
+    },
   })
 
 interface Props extends WithStyles<typeof styles> {
@@ -65,8 +85,6 @@ interface Props extends WithStyles<typeof styles> {
   savePalette: (palette: IPalette) => void
   theme: Theme
 }
-
-export type FormClasses = typeof styles
 
 interface DefaultProps {
   maxColors: number
@@ -167,27 +185,33 @@ class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
             </IconButton>
           </div>
           <Divider />
-          <Typography variant="h4">Design Your Palette</Typography>
-          <Button
-            color="secondary"
-            onClick={this.clearColors}
-            variant="contained"
-          >
-            Clear Palette
-          </Button>
-          <Button
-            color="primary"
-            disabled={paletteFull}
-            onClick={this.pickRandomColor}
-            variant="contained"
-          >
-            Random Color
-          </Button>
-          <ColorPickerForm
-            currentColors={colors}
-            handleAddColor={this.addColor}
-            paletteFull={paletteFull}
-          />
+          <div className={classes.drawerMain}>
+            <Typography variant="h5" gutterBottom>
+              Design Your Palette
+            </Typography>
+            <div className={classes.actionButtons}>
+              <Button
+                color="secondary"
+                onClick={this.clearColors}
+                variant="contained"
+              >
+                Clear Palette
+              </Button>
+              <Button
+                color="primary"
+                disabled={paletteFull}
+                onClick={this.pickRandomColor}
+                variant="contained"
+              >
+                Random Color
+              </Button>
+            </div>
+            <ColorPickerForm
+              currentColors={colors}
+              handleAddColor={this.addColor}
+              paletteFull={paletteFull}
+            />
+          </div>
           <Divider />
         </Drawer>
         <main
