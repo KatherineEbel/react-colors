@@ -3,16 +3,12 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import createStyles from '@material-ui/core/styles/createStyles'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import classNames from 'classnames'
-import { CssBaseline } from '@material-ui/core'
-import AppBar from '@material-ui/core/AppBar'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import IconButton from '@material-ui/core/IconButton'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
-import MenuIcon from '@material-ui/icons/Menu'
 import { ChromePicker, ColorResult } from 'react-color'
 import Button from '@material-ui/core/Button'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
@@ -22,6 +18,7 @@ import DraggableSwatchList from '../DraggableSwatchList'
 import arrayMove from 'array-move'
 import { SortEndHandler } from 'react-sortable-hoc'
 import { getRandomHexString } from '../../utils/colorHelpers'
+import NewPaletteFormNav from '../NewPaletteFormNav'
 
 const drawerWidth = 320
 
@@ -91,6 +88,8 @@ interface Props extends WithStyles<typeof styles> {
   theme: Theme
 }
 
+export type FormClasses = typeof styles
+
 interface DefaultProps {
   maxColors: number
 }
@@ -105,7 +104,6 @@ interface State {
   hex: string
   colorName: string
   colors: Color[]
-  paletteName: string
 }
 
 class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
@@ -118,7 +116,6 @@ class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
     colorName: '',
     hex: '#0000FF',
     open: true,
-    paletteName: '',
   }
 
   addColor = () => {
@@ -149,10 +146,9 @@ class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
     })
   }
 
-  handleSave = () => {
+  handleSave = (paletteName: string) => {
     const { history, savePalette } = this.props
     const { colors } = this.state
-    const { paletteName } = this.state
     const id = paletteName.toLowerCase().replace(/ /g, '-')
     const palette: IPalette = { id, emoji: '', name: paletteName, colors }
     savePalette(palette)
@@ -166,7 +162,12 @@ class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
   }
 
   pickRandomColor = () => {
+    const names = this.state.colors.map(c => c.name)
     const { name, hex } = getRandomHexString()
+    if (names.includes(name)) {
+      this.pickRandomColor()
+      return
+    }
     this.setState(({ colors }) => ({ colors: [...colors, { name, hex }] }))
   }
 
@@ -193,51 +194,18 @@ class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
   }
 
   render() {
-    const { classes, maxColors, theme } = this.props
-    const { colors, colorName, hex, open, paletteName } = this.state
+    const { classes, paletteNames, maxColors, theme } = this.props
+    const { colors, colorName, hex, open } = this.state
     const paletteFull = colors.length >= maxColors
     return (
       <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-          color="default"
-        >
-          <Toolbar disableGutters={!open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.toggleDrawer}
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Persistent drawer
-            </Typography>
-            <ValidatorForm onSubmit={this.handleSave}>
-              <TextValidator
-                errorMessages={[
-                  'Palette name is required',
-                  'Palette names need to be unique',
-                ]}
-                name="paletteName"
-                placeholder="Palette Name"
-                onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
-                  this.handleChange(target)
-                }
-                validators={['required', 'isPaletteNameUnique']}
-                value={paletteName}
-              />
-              <Button color="primary" type="submit" variant="contained">
-                Save Palette
-              </Button>
-            </ValidatorForm>
-          </Toolbar>
-        </AppBar>
+        <NewPaletteFormNav
+          classes={classes}
+          handleSave={this.handleSave}
+          paletteNames={paletteNames}
+          open={open}
+          toggleDrawer={this.toggleDrawer}
+        />
         <Drawer
           className={classes.drawer}
           variant="persistent"
