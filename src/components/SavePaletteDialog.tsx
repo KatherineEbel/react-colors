@@ -6,12 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 
-const styles = () =>
-  createStyles({
-    submit: {
-      marginLeft: '1rem',
-    },
-  })
+const styles = () => createStyles({})
 
 interface SavePaletteDialogProps extends WithStyles<typeof styles> {
   handleSave: (paletteName: string) => void
@@ -51,7 +46,6 @@ class SavePaletteDialog extends React.Component<
 
   render() {
     const { open, paletteName } = this.state
-    const { classes } = this.props
     return (
       <div>
         <Button color="primary" onClick={this.toggleOpen} variant="contained">
@@ -62,37 +56,33 @@ class SavePaletteDialog extends React.Component<
           onClose={this.toggleOpen}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Save New Palette</DialogTitle>
-          <DialogContent>
-            <ValidatorForm onSubmit={this.onSavePalette}>
+          <DialogTitle id="form-dialog-title">Save Your Palette</DialogTitle>
+          <ValidatorForm onSubmit={this.onSavePalette}>
+            <DialogContent>
               <TextValidator
                 errorMessages={[
                   'Palette name is required',
                   'Palette names need to be unique',
                 ]}
+                fullWidth
                 name="paletteName"
-                placeholder="Palette Name"
+                placeholder="Unique Palette Name"
                 onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
                   this.setState({ paletteName: target.value })
                 }
                 validators={['required', 'paletteNameUnique']}
                 value={paletteName}
               />
-              <Button
-                className={classes.submit}
-                color="primary"
-                type="submit"
-                variant="contained"
-              >
+            </DialogContent>
+            <DialogActions>
+              <Button color="secondary" onClick={this.toggleOpen}>
+                Cancel
+              </Button>
+              <Button color="primary" type="submit">
                 Save Palette
               </Button>
-            </ValidatorForm>
-          </DialogContent>
-          <DialogActions>
-            <Button color="secondary" onClick={this.toggleOpen}>
-              Cancel
-            </Button>
-          </DialogActions>
+            </DialogActions>
+          </ValidatorForm>
         </Dialog>
       </div>
     )
