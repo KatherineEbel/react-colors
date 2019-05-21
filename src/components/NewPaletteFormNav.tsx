@@ -7,10 +7,10 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import Button from '@material-ui/core/Button'
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import { Link } from 'react-router-dom'
 import styles from '../styles/NewPaletteFormNavStyles'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import SavePaletteDialog from './SavePaletteDialog'
 
 interface NewPaletteFormNavProps extends WithStyles<typeof styles> {
   handleSave: (paletteName: string) => void
@@ -19,35 +19,14 @@ interface NewPaletteFormNavProps extends WithStyles<typeof styles> {
   toggleDrawer: () => void
 }
 
-interface NewPaletteFormNavState {
-  newPaletteName: string
-}
-
-class NewPaletteFormNav extends React.Component<
-  NewPaletteFormNavProps,
-  NewPaletteFormNavState
-> {
-  state: NewPaletteFormNavState = {
-    newPaletteName: '',
-  }
-
-  componentDidMount(): void {
-    ValidatorForm.addValidationRule('paletteNameUnique', () => {
-      const { newPaletteName } = this.state
-      const { paletteNames } = this.props
-      return !paletteNames.includes(newPaletteName)
-    })
-  }
-
-  onSavePalette = () => {
+class NewPaletteFormNav extends React.Component<NewPaletteFormNavProps> {
+  onSavePalette = (paletteName: string) => {
     const { handleSave } = this.props
-    const { newPaletteName } = this.state
-    handleSave(newPaletteName)
+    handleSave(paletteName)
   }
 
   render() {
-    const { classes, toggleDrawer, open } = this.props
-    const { newPaletteName } = this.state
+    const { classes, toggleDrawer, open, paletteNames } = this.props
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -71,25 +50,11 @@ class NewPaletteFormNav extends React.Component<
               Create A Palette
             </Typography>
           </Toolbar>
-          <ValidatorForm onSubmit={this.onSavePalette}>
-            <TextValidator
-              errorMessages={[
-                'Palette name is required',
-                'Palette names need to be unique',
-              ]}
-              name="paletteName"
-              placeholder="Palette Name"
-              onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
-                this.setState({ newPaletteName: target.value })
-              }
-              validators={['required', 'paletteNameUnique']}
-              value={newPaletteName}
-            />
-            <Button color="primary" type="submit" variant="contained">
-              Save Palette
-            </Button>
-          </ValidatorForm>
           <div className={classes.navButtons}>
+            <SavePaletteDialog
+              handleSave={this.onSavePalette}
+              paletteNames={paletteNames}
+            />
             <Link to="/">
               <Button color="secondary" variant="contained">
                 Go Back

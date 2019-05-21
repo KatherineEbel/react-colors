@@ -14,7 +14,6 @@ export default (theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       flexDirection: 'row',
-      height: '12vh',
       justifyContent: 'space-between',
       paddingRight: '1vh',
     },
@@ -30,7 +29,13 @@ export default (theme: Theme) =>
       marginLeft: 12,
       marginRight: 20,
     },
-    navButtons: {},
+    navButtons: {
+      display: 'flex',
+      '& a': {
+        marginLeft: '1rem',
+        textDecoration: 'none',
+      },
+    },
     hide: {
       display: 'none',
     },
