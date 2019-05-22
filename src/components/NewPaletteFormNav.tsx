@@ -11,18 +11,19 @@ import { Link } from 'react-router-dom'
 import styles from '../styles/NewPaletteFormNavStyles'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import SavePaletteDialog from './SavePaletteDialog'
+import { EmojiData } from 'emoji-mart'
 
 interface NewPaletteFormNavProps extends WithStyles<typeof styles> {
-  handleSave: (paletteName: string) => void
+  handleSave: (paletteName: string, emoji: EmojiData) => void
   open: boolean
   paletteNames: string[]
   toggleDrawer: () => void
 }
 
 class NewPaletteFormNav extends React.Component<NewPaletteFormNavProps> {
-  onSavePalette = (paletteName: string) => {
+  onSavePalette = (paletteName: string, emoji: EmojiData) => {
     const { handleSave } = this.props
-    handleSave(paletteName)
+    handleSave(paletteName, emoji)
   }
 
   render() {

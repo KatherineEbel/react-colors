@@ -53,7 +53,6 @@ const PaletteList: React.FC<IPaletteListProps> = ({
   palettes,
 }) => {
   const pushPalette = (id: string) => {
-    console.log('Pushing palette', id)
     history.push(`palettes/${id}`)
   }
 

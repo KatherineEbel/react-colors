@@ -18,6 +18,7 @@ import { SortEndHandler } from 'react-sortable-hoc'
 import { getRandomHexString } from '../../utils/colorHelpers'
 import NewPaletteFormNav from '../NewPaletteFormNav'
 import ColorPickerForm from '../ColorPickerForm'
+import { EmojiData } from 'emoji-mart'
 
 const drawerWidth = 360
 
@@ -127,11 +128,11 @@ class NewPaletteForm extends React.Component<Props & DefaultProps, State> {
     })
   }
 
-  handleSave = (paletteName: string) => {
+  handleSave = (paletteName: string, emoji: EmojiData) => {
     const { history, savePalette } = this.props
     const { colors } = this.state
     const id = paletteName.toLowerCase().replace(/ /g, '-')
-    const palette: IPalette = { id, emoji: '', name: paletteName, colors }
+    const palette: IPalette = { id, emoji: emoji, name: paletteName, colors }
     savePalette(palette)
     history.push('/')
   }

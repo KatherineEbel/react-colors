@@ -1,3 +1,5 @@
+import { EmojiData } from 'emoji-mart'
+
 export interface Swatch {
   name: string
   hex: string
@@ -6,7 +8,7 @@ export interface Swatch {
 export interface IPalette {
   name: string
   id: string
-  emoji: string
+  emoji: string | EmojiData
   colors: Swatch[]
 }
 

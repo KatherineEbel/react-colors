@@ -1,21 +1,23 @@
 import * as React from 'react'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
-import { Button, WithStyles, createStyles, withStyles } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
+import Picker from 'emoji-mart/dist-es/components/picker/picker'
+import 'emoji-mart/css/emoji-mart.css'
+import { EmojiData } from 'emoji-mart'
 
-const styles = () => createStyles({})
-
-interface SavePaletteDialogProps extends WithStyles<typeof styles> {
-  handleSave: (paletteName: string) => void
+interface SavePaletteDialogProps {
+  handleSave: (paletteName: string, emoji: EmojiData) => void
   paletteNames: string[]
 }
 
 interface SavePaletteDialogState {
   open: boolean
   paletteName: string
+  pickerOpen: boolean
 }
 
 class SavePaletteDialog extends React.Component<
@@ -25,6 +27,7 @@ class SavePaletteDialog extends React.Component<
   state: SavePaletteDialogState = {
     open: false,
     paletteName: '',
+    pickerOpen: false,
   }
 
   toggleOpen = () => this.setState(({ open }) => ({ open: !open }))
@@ -37,27 +40,48 @@ class SavePaletteDialog extends React.Component<
     })
   }
 
-  onSavePalette = () => {
+  toggleDialogs = () => {
+    this.toggleOpen()
+    this.togglePicker()
+  }
+
+  onSavePalette = (emoji: EmojiData) => {
     const { paletteName } = this.state
     const { handleSave } = this.props
-    handleSave(paletteName)
-    this.toggleOpen()
+    handleSave(paletteName, emoji)
+  }
+
+  togglePicker = () => {
+    this.setState(({ pickerOpen }) => ({ pickerOpen: !pickerOpen }))
   }
 
   render() {
-    const { open, paletteName } = this.state
+    const { open, paletteName, pickerOpen } = this.state
     return (
       <div>
         <Button color="primary" onClick={this.toggleOpen} variant="contained">
           Save Palette
         </Button>
         <Dialog
+          aria-labelledby="emoji-dialog-title"
+          open={pickerOpen}
+          onClose={this.togglePicker}
+        >
+          <DialogTitle id="emoji-dialog-title">Choose an Emoji</DialogTitle>
+          <Picker onSelect={this.onSavePalette} title="Add some flair" />
+          <DialogActions>
+            <Button color="secondary" onClick={this.togglePicker}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
           open={open}
           onClose={this.toggleOpen}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Save Your Palette</DialogTitle>
-          <ValidatorForm onSubmit={this.onSavePalette}>
+          <ValidatorForm onSubmit={this.toggleDialogs}>
             <DialogContent>
               <TextValidator
                 errorMessages={[
@@ -89,4 +113,4 @@ class SavePaletteDialog extends React.Component<
   }
 }
 
-export default withStyles(styles)(SavePaletteDialog)
+export default SavePaletteDialog
