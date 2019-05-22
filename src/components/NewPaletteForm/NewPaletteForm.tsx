@@ -1,11 +1,10 @@
 import * as React from 'react'
-import { Theme } from '@material-ui/core/styles/createMuiTheme'
-import createStyles from '@material-ui/core/styles/createStyles'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import classNames from 'classnames'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import IconButton from '@material-ui/core/IconButton'
+import { Theme } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
@@ -19,66 +18,7 @@ import { getRandomHexString } from '../../utils/colorHelpers'
 import NewPaletteFormNav from '../NewPaletteFormNav'
 import ColorPickerForm from '../ColorPickerForm'
 import { EmojiData } from 'emoji-mart'
-
-const drawerWidth = 360
-
-const styles = (theme: Theme) =>
-  createStyles({
-    actionButtons: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      margin: '1em',
-      '& button:first-of-type': {
-        marginRight: '.5rem',
-      },
-    },
-    root: {
-      display: 'flex',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'center',
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      alignSelf: 'flex-end',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
-    content: {
-      flexGrow: 1,
-      height: 'calc(100vh - 64px)',
-      padding: theme.spacing.unit * 3,
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    },
-    drawerMain: {
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      justifyContent: 'center',
-      width: '90%',
-    },
-  })
+import styles from '../../styles/NewPaletteFormStyles'
 
 interface Props extends WithStyles<typeof styles> {
   history: History
