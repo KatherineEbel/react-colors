@@ -1,6 +1,7 @@
 import chroma from 'chroma-js'
 import { IPalette, Swatch } from './seedColors'
 import colorNamer, { Color, Palette } from 'color-namer'
+import { EmojiData } from 'emoji-mart'
 
 const LEVELS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
@@ -12,7 +13,7 @@ export interface IColor {
 export type ColorSet = { [n: number]: IColor[] }
 export interface ChromaPalette {
   colors: ColorSet
-  emoji: string
+  emoji: string | EmojiData
   id: string
   name: string
 }
@@ -67,7 +68,7 @@ export function generatePalette(starterPalette: IPalette): ChromaPalette {
 export interface IShadePalette {
   colors: IColor[]
   palette: {
-    emoji: string
+    emoji: string | EmojiData
     id: string
     name: string
   }
