@@ -10,10 +10,11 @@ export default () =>
     root: {
       cursor: 'pointer',
       display: 'inline-block',
+      flex: '0 0 20%',
       height: '25%',
-      margin: '0 auto -3.8px auto',
+      maxHeight: '25%',
+      minWidth: '150px',
       position: 'relative',
-      width: '20%',
       '&:hover svg': {
         color: 'rgba(255,255,255, 0.8)',
         transform: 'scale(1.5)',

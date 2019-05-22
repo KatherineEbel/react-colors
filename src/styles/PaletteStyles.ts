@@ -3,16 +3,16 @@ import { createStyles } from '@material-ui/styles'
 export const styles = () =>
   createStyles({
     colors: {
-      height: '90%',
-      position: 'relative',
+      display: 'flex',
+      flexWrap: 'wrap',
+      minHeight: '90vh',
     },
     container: {
       cursor: 'pointer',
       display: 'inline-block',
-      height: '50%',
-      margin: '0 auto -4px auto',
+      flex: '1 0 20%',
       position: 'relative',
-      width: '20%',
+      minWidth: '250px',
     },
     goBack: {
       background: 'rgba(255, 255, 255, 0.3)',
@@ -38,6 +38,6 @@ export const styles = () =>
     palette: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: '100%',
     },
   })

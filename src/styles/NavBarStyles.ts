@@ -5,7 +5,7 @@ export default () =>
     NavBar: {
       alignItems: 'center',
       display: 'flex',
-      height: '6vh',
+      minHeight: '6vh',
       justifyContent: 'flex-start',
     },
     logo: {
@@ -16,7 +16,7 @@ export default () =>
       fontSize: '1.3rem',
       height: '100%',
       marginRight: '1rem',
-      padding: '0 0.8rem',
+      padding: '1.2rem 0.8rem',
       '& a': {
         background: 'transparent',
         cursor: 'pointer',
@@ -32,8 +32,9 @@ export default () =>
     },
     slider: {
       display: 'inline-block',
+      flex: '1 1 20vw',
       margin: '0 2vw',
-      width: '20vw',
+      minWidth: '15vw',
       '& .rc-slider-track': {
         backgroundColor: 'transparent',
       },
