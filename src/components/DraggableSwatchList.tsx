@@ -10,10 +10,7 @@ interface IProps {
 }
 const SwatchList: React.FC<IProps> = ({ colors, handleDelete }) => {
   return (
-    <ul
-      className="DraggableSwatchList"
-      style={{ height: '100%', margin: 0, padding: 0 }}
-    >
+    <ul className="DraggableSwatchList">
       {colors.map(({ hex, name }, index) => (
         <DraggableSwatch
           color={hex}

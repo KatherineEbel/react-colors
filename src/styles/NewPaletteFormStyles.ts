@@ -34,7 +34,6 @@ export default (theme: Theme) =>
       justifyContent: 'flex-end',
     },
     content: {
-      flexGrow: 1,
       height: 'calc(100vh - 64px)',
       padding: 0,
       transition: theme.transitions.create('margin', {
@@ -42,6 +41,15 @@ export default (theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       marginLeft: -DRAWER_WIDTH,
+      '& .DraggableSwatchList': {
+        alignContent: 'flex-start',
+        display: 'flex',
+        flexWrap: 'wrap',
+        height: '100%',
+        justifyContent: 'flex-start',
+        margin: 0,
+        padding: 0,
+      },
     },
     contentShift: {
       transition: theme.transitions.create('margin', {
