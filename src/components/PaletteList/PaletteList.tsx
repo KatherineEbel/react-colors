@@ -8,12 +8,14 @@ import { Link } from 'react-router-dom'
 import styles from '../../styles/PaletteListStyles'
 
 interface IPaletteListProps extends WithStyles<typeof styles> {
+  handleDelete: (id: string) => void
   history: History
   palettes: IPalette[]
 }
 
 const PaletteList: React.FC<IPaletteListProps> = ({
   classes,
+  handleDelete,
   history,
   palettes,
 }) => {
@@ -23,7 +25,12 @@ const PaletteList: React.FC<IPaletteListProps> = ({
 
   const { root, container, miniPalettes, nav } = classes
   const links = palettes.map(p => (
-    <MiniPalette key={p.id} {...p} goToPalette={pushPalette.bind(null, p.id)} />
+    <MiniPalette
+      key={p.id}
+      {...p}
+      goToPalette={pushPalette.bind(null, p.id)}
+      handleDelete={handleDelete}
+    />
   ))
 
   return (

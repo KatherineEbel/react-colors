@@ -34,6 +34,10 @@ const App: React.FC = () => {
     }
   }
 
+  const deletePalette = (id: string) => {
+    setPalettes(palettes.filter(p => p.id !== id))
+  }
+
   const savePalette = (palette: IPalette) => {
     console.log('savePalette()')
     setPalettes(palettes => [...palettes, palette])
@@ -69,7 +73,11 @@ const App: React.FC = () => {
         exact
         path="/"
         render={({ history }) => (
-          <PaletteList palettes={palettes} history={history} />
+          <PaletteList
+            palettes={palettes}
+            history={history}
+            handleDelete={deletePalette}
+          />
         )}
       />
       <Route

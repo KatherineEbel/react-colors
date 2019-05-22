@@ -12,7 +12,7 @@ export default () =>
     container: {
       display: 'flex',
       flexWrap: 'wrap',
-      flex: '0 1 50%',
+      flex: '0 1 70%',
     },
     miniPalettes: {
       boxSizing: 'border-box',
