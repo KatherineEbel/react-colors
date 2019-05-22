@@ -1,5 +1,7 @@
 import chroma from 'chroma-js'
 import { IPalette, Swatch } from './seedColors'
+import colorNamer, { Color, Palette } from 'color-namer'
+import { EmojiData } from 'emoji-mart'
 
 const LEVELS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
@@ -11,7 +13,7 @@ export interface IColor {
 export type ColorSet = { [n: number]: IColor[] }
 export interface ChromaPalette {
   colors: ColorSet
-  emoji: string
+  emoji: string | EmojiData
   id: string
   name: string
 }
@@ -30,7 +32,7 @@ function getRange(hexValue: string): [string, string, string] {
       .darken(1.4)
       .hex(),
     hexValue,
-    end
+    end,
   ]
 }
 
@@ -40,11 +42,11 @@ export function generatePalette(starterPalette: IPalette): ChromaPalette {
       result[level] = []
       return result
     },
-    {}
+    {},
   )
   return starterPalette.colors.reduce(
     (palette: ChromaPalette, swatch: Swatch) => {
-      const scale = generateScale(swatch.hexValue, 10).reverse()
+      const scale = generateScale(swatch.hex, 10).reverse()
       scale.forEach((color: string, i: number) => {
         palette.colors[LEVELS[i]].push({
           id: swatch.name.toLocaleLowerCase().replace(/ /g, '-'),
@@ -54,26 +56,26 @@ export function generatePalette(starterPalette: IPalette): ChromaPalette {
           rgba: chroma(scale[i])
             .css()
             .replace('rgb', 'rgba')
-            .replace(')', ',1.0)')
+            .replace(')', ',1.0)'),
         })
       })
       return palette
     },
-    { ...starterPalette, colors }
+    { ...starterPalette, colors },
   )
 }
 
 export interface IShadePalette {
   colors: IColor[]
   palette: {
-    emoji: string
+    emoji: string | EmojiData
     id: string
     name: string
   }
 }
 export const getShades = (
   palette: ChromaPalette,
-  color: string
+  color: string,
 ): IShadePalette => {
   const { emoji, id, name } = palette
   const colors = palette.colors
@@ -90,6 +92,37 @@ export const getShades = (
       }
       return shades
     },
-    { palette: { emoji, id, name }, colors: [] }
+    { palette: { emoji, id, name }, colors: [] },
   )
+}
+
+// add index signature to access values by key
+interface IndexedRecord extends Record<Palette, Color[]> {
+  [key: string]: Color[]
+}
+
+export function getRandomHexString(): Color {
+  const max = 1 << 24
+  const hexString =
+    '#' +
+    (max + Math.floor(Math.random() * max))
+      .toString(16)
+      .slice(-6)
+      .toUpperCase()
+  const names = colorNamer(hexString) as IndexedRecord
+  const color = Object.keys(names)
+    .map(key => names[key][0])
+    .sort((a, b) => {
+      if (a.distance < b.distance) {
+        return -1
+      }
+      if (a.distance > b.distance) {
+        return 1
+      }
+      return 0
+    })[0]
+  if (!color.hex.startsWith('#')) {
+    color.hex = '#' + color.hex
+  }
+  return color
 }

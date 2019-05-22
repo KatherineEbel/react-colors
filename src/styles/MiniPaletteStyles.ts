@@ -14,9 +14,13 @@ export const miniPaletteStyles = () =>
       fontSize: '1.5rem',
     },
     root: {
+      flex: '0 1 30%',
       backgroundColor: 'white',
       border: '1px solid black',
       borderRadius: '5px',
+      margin: '0 0.5rem 2% 0',
+      minWidth: '200px',
+      maxWidth: '30%',
       padding: '0.5rem',
       position: 'relative',
       overflow: 'hidden',
