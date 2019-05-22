@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import seedPalettes, { IPalette } from '../../utils/seedColors'
 import { generatePalette, getShades } from '../../utils/colorHelpers'
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router'
@@ -14,7 +14,7 @@ type Params = {
 
 const App: React.FC = () => {
   // TODO: make diff functions for Palette and ColorShadePalette?
-  const [palettes, setPalettes] = useState<IPalette[]>(seedPalettes)
+  const [palettes, setPalettes] = useState<IPalette[]>([])
   const matchPalette = (
     routeProps: RouteComponentProps<Params>,
   ): React.ReactElement => {
@@ -35,8 +35,33 @@ const App: React.FC = () => {
   }
 
   const savePalette = (palette: IPalette) => {
+    console.log('savePalette()')
     setPalettes(palettes => [...palettes, palette])
   }
+
+  function getPalettes(): IPalette[] {
+    try {
+      const storedPalettes = localStorage.getItem('reactColorPalettes')
+      if (storedPalettes) {
+        const data = JSON.parse(storedPalettes) as IPalette[]
+        if (data[0].colors.length) {
+          return data
+        }
+      }
+      return seedPalettes
+    } catch {
+      return seedPalettes
+    }
+  }
+
+  useEffect(() => {
+    const palettes = getPalettes()
+    setPalettes(palettes)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('reactColorPalettes', JSON.stringify(palettes))
+  }, [palettes])
 
   return (
     <Switch>
