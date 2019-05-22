@@ -12,10 +12,10 @@ const styles = () =>
     Swatch: (props: Props) => ({
       cursor: 'pointer',
       display: 'inline-block',
-      height: props.moreURL ? '25%' : '50%',
-      margin: '0 auto -4px auto',
+      paddingBottom: props.moreURL ? 0 : '30%',
+      flex: '1 0 20%',
       position: 'relative',
-      width: '20%',
+      minWidth: '250px',
       '&:hover button': {
         opacity: 1,
       },
