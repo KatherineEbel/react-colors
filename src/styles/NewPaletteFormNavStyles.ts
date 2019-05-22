@@ -1,7 +1,7 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import createStyles from '@material-ui/core/styles/createStyles'
+import { DRAWER_WIDTH } from './index'
 
-const drawerWidth = 360
 export default (theme: Theme) =>
   createStyles({
     root: {
@@ -18,8 +18,8 @@ export default (theme: Theme) =>
       paddingRight: '1vh',
     },
     appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+      width: `calc(100% - ${DRAWER_WIDTH}px)`,
+      marginLeft: DRAWER_WIDTH,
       transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,

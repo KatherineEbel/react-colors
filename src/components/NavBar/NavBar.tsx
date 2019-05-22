@@ -48,7 +48,7 @@ const NavBar: React.FC<Props> = props => {
         <Select onChange={onFormatChange} value={format}>
           <MenuItem value="hex">HEX - #ffffff</MenuItem>
           <MenuItem value="rgb">RGB - rgb(255,255,255)</MenuItem>
-          <MenuItem value="rgba">RGBA - rgb(255,255,255,1.0)</MenuItem>
+          <MenuItem value="rgba">RGBA - rgba(255,255,255,1)</MenuItem>
         </Select>
       </div>
       <Snackbar
