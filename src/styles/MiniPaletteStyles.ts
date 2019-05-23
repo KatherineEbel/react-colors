@@ -1,7 +1,17 @@
-import createStyles from '@material-ui/styles/createStyles'
+import createStyles from '@material-ui/core/styles/createStyles'
+import blue from '@material-ui/core/colors/blue'
+import red from '@material-ui/core/colors/red'
 
 export const miniPaletteStyles = () =>
   createStyles({
+    check: {
+      background: red[100],
+      color: red[600],
+    },
+    close: {
+      background: blue[100],
+      color: blue[600],
+    },
     colors: {
       backgroundColor: '#dae1e4',
       borderRadius: '5px',

@@ -1,14 +1,19 @@
 import * as React from 'react'
-import withStyles, { WithStyles } from '@material-ui/styles/withStyles'
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import { Swatch } from '../../utils/seedColors'
 import { miniPaletteStyles } from '../../styles/MiniPaletteStyles'
 import { Emoji, EmojiData } from 'emoji-mart'
 import DeleteRounded from '@material-ui/icons/DeleteRounded'
 import Dialog from '@material-ui/core/Dialog'
 import { DialogTitle } from '@material-ui/core'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar'
+import Check from '@material-ui/icons/Check'
+import Close from '@material-ui/icons/Close'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import { useState } from 'react'
+import ListItemText from '@material-ui/core/ListItemText'
 
 interface Props extends WithStyles<typeof miniPaletteStyles> {
   colors: Swatch[]
@@ -58,14 +63,24 @@ const MiniPalette: React.FC<Props> = props => {
         onClose={toggleOpen}
       >
         <DialogTitle id="delete-dialog-title">Delete this palette?</DialogTitle>
-        <DialogActions>
-          <Button color="primary" onClick={toggleOpen}>
-            Cancel
-          </Button>
-          <Button color="secondary" onClick={e => deletePalette(e, id)}>
-            Delete
-          </Button>
-        </DialogActions>
+        <List>
+          <ListItem button onClick={e => deletePalette(e, id)}>
+            <ListItemAvatar className={classes.check}>
+              <Avatar>
+                <Check />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Delete" />
+          </ListItem>
+          <ListItem button onClick={toggleOpen}>
+            <ListItemAvatar className={classes.close}>
+              <Avatar>
+                <Close />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Close" />
+          </ListItem>
+        </List>
       </Dialog>
       <div className={classes.colors}>{swatches}</div>
       <h5 className={classes.title}>
@@ -76,4 +91,4 @@ const MiniPalette: React.FC<Props> = props => {
   )
 }
 
-export default withStyles(miniPaletteStyles)(MiniPalette)
+export default withStyles(miniPaletteStyles, { withTheme: true })(MiniPalette)
