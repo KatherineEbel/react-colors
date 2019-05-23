@@ -6,6 +6,7 @@ import { IPalette } from '../../utils/seedColors'
 import MiniPalette from '../MiniPalette/MiniPalette'
 import { Link } from 'react-router-dom'
 import styles from '../../styles/PaletteListStyles'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 interface IPaletteListProps extends WithStyles<typeof styles> {
   handleDelete: (id: string) => void
@@ -25,12 +26,14 @@ const PaletteList: React.FC<IPaletteListProps> = ({
 
   const { root, container, miniPalettes, nav } = classes
   const links = palettes.map(p => (
-    <MiniPalette
-      key={p.id}
-      {...p}
-      goToPalette={pushPalette.bind(null, p.id)}
-      handleDelete={handleDelete}
-    />
+    <CSSTransition classNames="fade" key={p.id} timeout={500}>
+      <MiniPalette
+        key={p.id}
+        {...p}
+        goToPalette={pushPalette.bind(null, p.id)}
+        handleDelete={handleDelete}
+      />
+    </CSSTransition>
   ))
 
   return (
@@ -40,7 +43,7 @@ const PaletteList: React.FC<IPaletteListProps> = ({
           <h1>React Colors</h1>
           <Link to="/palettes/new">Create Palette</Link>
         </nav>
-        <div className={miniPalettes}>{links}</div>
+        <TransitionGroup className={miniPalettes}>{links}</TransitionGroup>
       </div>
     </div>
   )
