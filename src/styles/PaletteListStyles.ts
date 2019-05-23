@@ -1,10 +1,13 @@
 import createStyles from '@material-ui/core/styles/createStyles'
+import bg from './bg.svg'
 
 export default () =>
   createStyles({
     root: {
       alignItems: 'flex-start',
-      backgroundColor: 'blue',
+      backgroundColor: '#4833d4',
+      backgroundImage: `url(${bg})`,
+      /* background by SVGBackgrounds.com */
       display: 'flex',
       justifyContent: 'center',
       minHeight: '100vh',
