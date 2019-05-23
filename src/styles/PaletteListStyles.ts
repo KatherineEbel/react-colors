@@ -24,13 +24,14 @@ export default () =>
     container: {
       display: 'flex',
       flexWrap: 'wrap',
-      flex: '0 1 70%',
+      flex: '0 1 85%',
     },
     miniPalettes: {
       boxSizing: 'border-box',
       display: 'flex',
       flexWrap: 'wrap',
-      justifyContent: 'center',
+      // justifyContent: 'center',
+      justifyContent: 'flex-start',
     },
     nav: {
       alignItems: 'center',
